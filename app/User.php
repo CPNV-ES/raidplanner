@@ -14,7 +14,9 @@ class User extends Authenticatable
     'firstname',
     'lastname',
     'birthday',
-    'preferenced_server_id'
+    'preferenced_server_id',
+    'remember_token',
+    'valid'
   ];
 
   // Relationships

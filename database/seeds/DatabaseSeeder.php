@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
       'password' => Hash::make('secret'),
       'firstname' => 'Nolan',
       'lastname' => 'Rigo',
+      'remember_token' => str_random(40),
       'birthday' => '1994-03-13'
     ]);
     $nolan->preferenced_server()->associate($menalt)->save();
