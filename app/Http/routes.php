@@ -26,12 +26,15 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
-
 Route::group(['middleware' => 'web'], function () {
-    Route::auth();
+    Route::get('login', 'SessionController@create');
+    Route::post('login', 'SessionController@store');
+    Route::get('logout', 'SessionController@destroy');
 
-    Route::get('/home', 'HomeController@index');
+    Route::group(['middleware' => ['auth']], function (){
+
+        Route::get('home', function () {
+            return view('home');
+        });
+    });
 });

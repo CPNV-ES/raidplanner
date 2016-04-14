@@ -75,7 +75,7 @@ class DatabaseSeeder extends Seeder
     // User Marco
     $marco = User::create([
       'username' => 'marcolecalme',
-      'email' => 'marco.visalli@gmail.com',
+      'email' => 'marco.visalli@cpnv.ch',
       'password' => Hash::make('secret'),
       'firstname' => 'Marco',
       'lastname' => 'Visalli',
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
     ]);
     $marco->preferenced_server()->associate($mylaise)->save();
 
-    // User Jo
+    // User Jonathan
     $jo = User::create([
       'username' => 'jzaehrin',
       'email' => 'jonathan.zaehringer@cpnv.ch',
@@ -101,7 +101,7 @@ class DatabaseSeeder extends Seeder
     // User Seb
     $seb = User::create([
       'username' => 'enormeetsec',
-      'email' => 'sebastien.martinus@gmail.com',
+      'email' => 'sebastien.martin@cpnv.ch',
       'password' => Hash::make('secret'),
       'firstname' => 'Sébastien',
       'lastname' => 'Martin',
