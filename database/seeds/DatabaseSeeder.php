@@ -55,7 +55,9 @@ class DatabaseSeeder extends Seeder
       'firstname' => 'Nolan',
       'lastname' => 'Rigo',
       'remember_token' => str_random(40),
-      'birthday' => '1994-03-13'
+      'birthday' => '1994-03-13',
+      'remember_token' => str_random(40),
+      'valid' => true
     ]);
     $nolan->preferenced_server()->associate($menalt)->save();
 
@@ -64,7 +66,9 @@ class DatabaseSeeder extends Seeder
       'username' => 'kevin',
       'email' => 'kevin@hotmail.com',
       'password' => Hash::make('secret'),
-      'birthday' => '1998-01-05'
+      'birthday' => '1998-01-05',
+      'remember_token' => str_random(40),
+      'valid' => false
     ]);
     $kevin->preferenced_server()->associate($jiva)->save();
 
@@ -75,18 +79,22 @@ class DatabaseSeeder extends Seeder
       'password' => Hash::make('secret'),
       'firstname' => 'Marco',
       'lastname' => 'Visalli',
-      'birthday' => '1994-08-08'
+      'birthday' => '1994-08-08',
+      'remember_token' => str_random(40),
+      'valid' => true
     ]);
     $marco->preferenced_server()->associate($mylaise)->save();
 
     // User Jo
     $jo = User::create([
-      'username' => 'jo',
-      'email' => 'jo@cpnv.ch',
+      'username' => 'jzaehrin',
+      'email' => 'jonathan.zaehringer@cpnv.ch',
       'password' => Hash::make('secret'),
       'firstname' => 'Jonathan',
-      'lastname' => 'Za... desolé',
-      'birthday' => '1993-04-07'
+      'lastname' => 'Zaehringer',
+      'birthday' => '1994-11-15',
+      'remember_token' => str_random(40),
+      'valid' => true
     ]);
     $jo->preferenced_server()->associate($sumens)->save();
 
@@ -97,7 +105,9 @@ class DatabaseSeeder extends Seeder
       'password' => Hash::make('secret'),
       'firstname' => 'Sébastien',
       'lastname' => 'Martin',
-      'birthday' => '1992-09-01'
+      'birthday' => '1992-09-01',
+      'remember_token' => str_random(40),
+      'valid' => false
     ]);
     $seb->preferenced_server()->associate($mylaise)->save();
 
