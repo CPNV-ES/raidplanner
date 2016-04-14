@@ -135,7 +135,7 @@ class UserController extends Controller
 
         if(!empty($user)){
             if($user->remember_token == $remember_token){
-                $user->validate = true;
+                $user->valid = true;
 
                 $user->save();
             }

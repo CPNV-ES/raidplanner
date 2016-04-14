@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('validate/{id}/{remember_token}', 'UserController@validateRegisterToken');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
