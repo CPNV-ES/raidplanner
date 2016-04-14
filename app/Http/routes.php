@@ -31,10 +31,17 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('login', 'SessionController@store');
     Route::get('logout', 'SessionController@destroy');
 
+    Route::get('register', 'UserController@create');
+    Route::post('register', 'UserController@store');
+
     Route::group(['middleware' => ['auth']], function (){
 
         Route::get('home', function () {
             return view('home');
         });
+
+        Route::get('profile/{id}', 'UserController@show');
+        Route::get('profile/edit/{id}', 'UserController@edit');
+        Route::put('profile/edit/{id}',['before' => 'csrf','uses' => 'UserController@update']);
     });
 });
