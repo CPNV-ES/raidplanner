@@ -67,6 +67,16 @@ class UserController extends Controller
     }
 
     /**
+     * Display the logged resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLogged()
+    {
+        return view('profile', ['user' => Auth::user(), 'error' => ""]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -84,6 +94,17 @@ class UserController extends Controller
     }
 
     /**
+     * Show the form for editing the logged resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editLogged()
+    {
+        return view('edit_profile', ['user' => Auth::user()]);
+    }
+
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -99,8 +120,8 @@ class UserController extends Controller
             $error = "";
             $user = User::find($id);
             $user->email = $request->input('email');
-            $user->first_name = $request->input('first_name');
-            $user->last_name = $request->input('last_name');
+            $user->firstname = $request->input('first_name');
+            $user->lastname = $request->input('last_name');
 
             if(!empty($request->input('old_password'))){
                 if(Hash::check($request->input('old_password'), $user->password)) {

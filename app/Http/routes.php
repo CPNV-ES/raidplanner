@@ -42,8 +42,10 @@ Route::group(['middleware' => 'web'], function () {
             return view('home');
         });
 
-        Route::get('profile/{id}', 'UserController@show');
-        Route::get('profile/edit/{id}', 'UserController@edit');
-        Route::put('profile/edit/{id}',['before' => 'csrf','uses' => 'UserController@update']);
+        Route::get('profile', 'UserController@showLogged');
+        Route::get('profile/{id}', 'UserController@show')->where('id', '[0-9]+');;
+        Route::get('profile/edit', 'UserController@editLogged');
+        Route::get('profile/edit/{id}', 'UserController@edit')->where('id', '[0-9]+');;
+        Route::put('profile/edit/{id}',['before' => 'csrf','uses' => 'UserController@update'])->where('id', '[0-9]+');;
     });
 });
