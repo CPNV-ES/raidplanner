@@ -5,6 +5,7 @@ use App\User;
 use App\Server;
 use App\Guild;
 use App\Alliance;
+use App\GuildMember;
 
 class DatabaseSeeder extends Seeder
 {
@@ -135,6 +136,8 @@ class DatabaseSeeder extends Seeder
     $chevalierdemeraude->name = 'Les Chevaliers D\'Émeraude';
     $chevalierdemeraude->server()->associate($menalt);
     $chevalierdemeraude->save();
+
+    $jo->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'master']);
 
 
 

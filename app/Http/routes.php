@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('validate/{id}/{remember_token}', 'UserController@validateRegisterToken');
+Route::get('validate/{id}/{remember_token}', 'UsersController@validateRegisterToken');
 
 /*
 |--------------------------------------------------------------------------
@@ -29,12 +29,12 @@ Route::get('validate/{id}/{remember_token}', 'UserController@validateRegisterTok
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('login', 'SessionController@create');
-    Route::post('login', 'SessionController@store');
-    Route::get('logout', 'SessionController@destroy');
+    Route::get('login', 'SessionsController@create');
+    Route::post('login', 'SessionsController@store');
+    Route::get('logout', 'SessionsController@destroy');
 
-    Route::get('register', 'UserController@create');
-    Route::post('register', 'UserController@store');
+    Route::get('register', 'UsersController@create');
+    Route::post('register', 'UsersController@store');
 
     Route::group(['middleware' => ['auth']], function (){
 
@@ -42,10 +42,25 @@ Route::group(['middleware' => 'web'], function () {
             return view('home');
         });
 
-        Route::get('profile', 'UserController@showLogged');
-        Route::get('profile/{id}', 'UserController@show')->where('id', '[0-9]+');;
-        Route::get('profile/edit', 'UserController@editLogged');
-        Route::get('profile/edit/{id}', 'UserController@edit')->where('id', '[0-9]+');;
-        Route::put('profile/edit/{id}',['before' => 'csrf','uses' => 'UserController@update'])->where('id', '[0-9]+');;
+        Route::group(['middleware' => [/*'subdomain.resource', */'role']], function(){
+            Route::resource('alliances', 'TempController');
+
+            Route::resource('guilds', 'TempController');
+
+            Route::resource('groups', 'TempController');
+        });
+
+        Route::group(['prefix' => 'users/{user}'], function() {
+            Route::get('/', 'ProfileController@show');
+            Route::get('/profile', 'ProfileController@show');
+        });
+
+        Route::group(['prefix' => 'profile', 'middleware' => 'role'], function() {
+            Route::get('', 'UsersController@show');
+            Route::get('edit', 'UsersController@edit');
+            Route::put('edit', ['before' => 'csrf', 'uses' => 'UsersController@update']);
+        });
+
+
     });
 });

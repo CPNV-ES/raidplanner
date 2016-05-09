@@ -11,8 +11,8 @@
 <div class="container">
     <p>Username : {{ $user->username }}</p>
     <p>Email : {{ $user->email }}</p>
-    <p>First name : {{ $user->first_name }}</p>
-    <p>Last name : {{ $user->last_name }}</p>
+    <p>First name : {{ $user->firstname }}</p>
+    <p>Last name : {{ $user->lastname }}</p>
 </div>
 @endsection
 

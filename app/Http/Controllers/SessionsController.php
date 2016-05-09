@@ -7,13 +7,11 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use App\User;
 
 
-class SessionController extends Controller
+class SessionsController extends Controller
 {
     use AuthenticatesAndRegistersUsers;
 
