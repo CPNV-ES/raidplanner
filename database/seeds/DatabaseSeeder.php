@@ -121,6 +121,7 @@ class DatabaseSeeder extends Seeder
     // L'épée D'Ophil
     $lepeedophil = new Guild;
     $lepeedophil->name = 'L\'épée D\'Ophile';
+    $lepeedophil->icon_path = 'http://img.xooimage.com/files110/3/6/4/dofusicon5-4d259bb.png';
     $lepeedophil->server()->associate($sumens);
     $lepeedophil->alliance()->associate($alliancesolo);
     $lepeedophil->save();
@@ -128,12 +129,14 @@ class DatabaseSeeder extends Seeder
     // Dynastie Verte
     $dynastieverte = new Guild;
     $dynastieverte->name = 'La Dynastie Verte';
+    $dynastieverte->icon_path = 'http://nesparr.e.n.f.unblog.fr/files/2010/11/icondofus31.png';
     $dynastieverte->server()->associate($mylaise);
     $dynastieverte->save();
 
     // Les Chevaliers D'Émeraude
     $chevalierdemeraude = new Guild;
     $chevalierdemeraude->name = 'Les Chevaliers D\'Émeraude';
+    $chevalierdemeraude->icon_path = 'http://nesparr.e.n.f.unblog.fr/files/2010/11/dofusicone9.png';
     $chevalierdemeraude->server()->associate($menalt);
     $chevalierdemeraude->save();
 
