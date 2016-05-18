@@ -2,10 +2,41 @@
 
 namespace App\Http\Middleware;
 
+
+use App\Guild;
+use App\Alliance;
+use App\Group;
 use Closure;
+use Illuminate\Support\Facades\Auth;
+use Mockery\CountValidator\Exception;
 
 class Role
 {
+
+    private $roles = [
+        'groups' => [
+            'edit' => ['master'],
+            'update' => ['master'],
+            'edit_members' => ['officer', 'master'],
+            'action_member' => ['officer', 'master'],
+            'destroy' => ['master']
+        ],
+        'guilds' => [
+            'edit' => ['master'],
+            'update' => ['master'],
+            'edit_members' => ['officer', 'master'],
+            'action_member' => ['officer', 'master'],
+            'destroy' => ['master']
+        ],
+        'alliances' => [
+            'edit' => ['master'],
+            'update' => ['master'],
+            'edit_members' => ['master'],
+            'action_member' => ['master'],
+            'destroy' => ['master']
+        ]
+    ];
+
     /**
      * Handle an incoming request.
      *
@@ -15,43 +46,64 @@ class Role
      */
     public function handle($request, Closure $next)
     {
-        dd($request);
-        preg_match('/^([a-z]+)\.([a-z)+)$/', $request->route()->getActionName(), $match);
+        preg_match('/^([a-z]+)\.([a-z\_]+)$/', $request->route()->getName(), $matches);
+        $resource = $matches[1];
+        $action = $matches[2];
 
-        dd($match);
-        $right = [
-            'group' => [
-                'edit' => 'master',
-                'edit send' => 'master',
-                'edit member' => 'officer',
-                'action member' => 'officer',
-                'delete' => 'master'
-            ],
-            'guild' => [
-                'edit' => 'master',
-                'edit send' => 'master',
-                'edit member' => 'officer',
-                'action member' => 'officer',
-                'delete' => 'master'
-            ],
-            'alliance' => [
-                'edit' => 'master',
-                'edit send' => 'master',
-                'edit member' => 'master',
-                'action member' => 'master',
-                'delete' => 'master'
-            ]
-        ];
-        dd($request);
-        return $next($request);
+        if(!array_key_exists($action, $this->roles[$resource])){
+            return $next($request);
+        }
+
+        $user = Auth::getUser();
+
+        switch($resource) {
+            case "groups" :
+                $role = $this->getGroupRole($user, Group::find($request->groups));
+                break;
+            case "guilds" :
+                $role = $this->getGuildRole($user, Guild::find($request->guilds));
+                break;
+            case "alliances" :
+                $role = $this->getAllianceRole($user, Alliance::find($request->alliances));
+                break;
+            default :
+                abort(500, "Internal Server Error");
+                break;
+        }
+
+        if(in_array($role, $this->roles[$resource][$action])){
+            return $next($request);
+        }
+
+        abort(403, "Access denied");
     }
-    private function getGuildRight($user){
+    private function getGuildRole($user, $guild){
+        $memberOf = $user->memberOfGuild($guild)->firstOrFail();
 
+        return $memberOf->role;
     }
-    private function getAllianceRight($user){
+    protected function getAllianceRole($user, $alliance){
+        $guilds = $alliance->guilds;
 
+        if($guilds->isEmpty()){
+            throw new Exception();
+        }
+
+        foreach($guilds as $guild){
+            if($guild->alliance_role == "master"){
+                foreach($guild->usersByRole('master')->get() as $guild_user){
+                    if($user->id == $guild_user->id){
+                        return "master";
+                    }
+                }
+            }
+        }
+
+        throw new Exception();
     }
-    private function getGroupRight($user){
+    private function getGroupRole($user, $group){
+        $memberOf = $user->memberOfGroup($group)->firstOrFail();
 
+        return $memberOf->role;
     }
 }

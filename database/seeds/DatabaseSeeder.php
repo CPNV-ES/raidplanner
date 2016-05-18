@@ -5,7 +5,7 @@ use App\User;
 use App\Server;
 use App\Guild;
 use App\Alliance;
-use App\GuildMember;
+use App\Group;
 
 class DatabaseSeeder extends Seeder
 {
@@ -124,6 +124,7 @@ class DatabaseSeeder extends Seeder
     $lepeedophil->icon_path = 'http://img.xooimage.com/files110/3/6/4/dofusicon5-4d259bb.png';
     $lepeedophil->server()->associate($sumens);
     $lepeedophil->alliance()->associate($alliancesolo);
+    $lepeedophil->alliance_role = "master";
     $lepeedophil->save();
 
     // Dynastie Verte
@@ -131,6 +132,7 @@ class DatabaseSeeder extends Seeder
     $dynastieverte->name = 'La Dynastie Verte';
     $dynastieverte->icon_path = 'http://nesparr.e.n.f.unblog.fr/files/2010/11/icondofus31.png';
     $dynastieverte->server()->associate($mylaise);
+    $dynastieverte->alliance_role = "master";
     $dynastieverte->save();
 
     // Les Chevaliers D'Émeraude
@@ -138,9 +140,19 @@ class DatabaseSeeder extends Seeder
     $chevalierdemeraude->name = 'Les Chevaliers D\'Émeraude';
     $chevalierdemeraude->icon_path = 'http://nesparr.e.n.f.unblog.fr/files/2010/11/dofusicone9.png';
     $chevalierdemeraude->server()->associate($menalt);
+    $chevalierdemeraude->alliance_role = "master";
     $chevalierdemeraude->save();
 
     $jo->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'master']);
+
+    $overflew = Group::create([
+      'name' => 'Overflew'
+    ]);
+    $obsidian = Group::create([
+        'name' => 'Obsidiant'
+    ]);
+
+    $jo->group_members()->create(['group_id' => $overflew->id, 'role' => 'member']);
 
 
 

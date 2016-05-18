@@ -64,7 +64,7 @@ class TempController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         dd(false);
     }
@@ -89,6 +89,29 @@ class TempController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        dd(false);
+    }
+
+    /**
+     * Show the form for editing the logged resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editMembers($id)
+    {
+        dd(false);
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function actionMembers(Request $request, $id)
     {
         dd(false);
     }

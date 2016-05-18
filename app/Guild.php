@@ -18,4 +18,7 @@ class Guild extends Model
     return $this->belongsTo(Server::class);
   }
 
+  public function usersByRole($role){
+    return $this->belongsToMany(User::class, 'guild_members')->wherePivot('role', $role);
+  }
 }
