@@ -19,12 +19,12 @@ class SubdomainResource
 
         switch($matches[1]){
             case 'allances' :
-                if(Alliance::find($request->alliances)->server[0]->name != $request->subdomain){
+                if(Alliance::findOrFail($request->alliances)->server[0]->name != $request->subdomain){
                     return false;
                 }
                 break;
             case 'guilds' :
-                if(Guild::find($request->guilds)->server->name != $request->subdomain){
+                if(Guild::findOrFail($request->guilds)->server->name != $request->subdomain){
                     return false;
                 }
                 break;

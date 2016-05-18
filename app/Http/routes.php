@@ -43,10 +43,16 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         Route::group(['middleware' => [/*'subdomain.resource', */'role']], function(){
+            Route::get('alliances/{alliances}/edit_members', 'TempController@editMembers')->name('alliances.edit_members');
+            Route::put('alliances/{alliances}/member/{member}', 'TempController@actionMember')->name('alliances.action_member');
             Route::resource('alliances', 'TempController');
 
+            Route::get('guilds/{guilds}/edit_members', 'TempController@editMembers')->name('guilds.edit_members');
+            Route::put('guilds/{guilds}/member/{member}', 'TempController@actionMember')->name('guilds.action_member');
             Route::resource('guilds', 'TempController');
 
+            Route::get('groups/{groups}/edit_members', 'TempController@editMembers')->name('groups.edit_members');
+            Route::put('groups/{groups}/member/{member}', 'TempController@actionMember')->name('groups.action_member');
             Route::resource('groups', 'TempController');
         });
 
