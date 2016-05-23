@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Guild;
+use App\Alliance;
 
 class SubdomainResource
 {
@@ -18,17 +20,24 @@ class SubdomainResource
         preg_match('/^([a-z]+)\.[a-z]+$/', $request->route()->getName(), $matches);
 
         switch($matches[1]){
-            case 'allances' :
-                if(Alliance::findOrFail($request->alliances)->server[0]->name != $request->subdomain){
-                    return false;
+            case 'alliances' :
+                if(!isset($request->alliances)){
+                    break;
+                }
+                if(Alliance::findOrFail($request->alliances)->servers[0]->slug != $request->subdomain){
+                    abort(403, "Resource does not exist");
                 }
                 break;
             case 'guilds' :
-                if(Guild::findOrFail($request->guilds)->server->name != $request->subdomain){
-                    return false;
+                if(!isset($request->guilds)){
+                    break;
+                }
+                if(Guild::findOrFail($request->guilds)->server->slug != $request->subdomain){
+                    abort(403, "Resource does not exist");
                 }
                 break;
         }
+        
         return $next($request);
     }
 }

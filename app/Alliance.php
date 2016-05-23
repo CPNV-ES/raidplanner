@@ -12,4 +12,8 @@ class Alliance extends Model
   {
     return $this->hasMany(Guild::class);
   }
+  public function servers()
+  {
+    return $this->belongsToMany(Server::class, 'guilds');
+  }
 }
