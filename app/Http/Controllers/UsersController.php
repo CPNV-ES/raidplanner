@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Support\Facades\Mail;
 use Validator;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     use AuthenticatesAndRegistersUsers;
 
@@ -54,51 +51,23 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the logged user profile.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $user = User::find($id);
-
-        return view('profile', ['user' => $user, 'error' => ""]);
-    }
-
-    /**
-     * Display the logged resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLogged()
+    public function show()
     {
         return view('profile', ['user' => Auth::user(), 'error' => ""]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::find($id);
-
-        if ($user->id != Auth::user()->id){
-            return redirect("profile/$id");
-        }
-
-        return view('edit_profile', ['user' => $user]);
-    }
 
     /**
      * Show the form for editing the logged resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function editLogged()
+    public function edit()
     {
         return view('edit_profile', ['user' => Auth::user()]);
     }
@@ -111,33 +80,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        if(Auth::getUser()->id == $id)
-        {
-            $this->validateUpdate($request);
+        $this->validateUpdate($request);
 
-            $error = "";
-            $user = User::find($id);
-            $user->email = $request->input('email');
-            $user->firstname = $request->input('first_name');
-            $user->lastname = $request->input('last_name');
+        $error = "";
+        $user = Auth::getUser();
+        $user->email = $request->input('email');
+        $user->firstname = $request->input('firstname');
+        $user->lastname = $request->input('lastname');
 
-            if(!empty($request->input('old_password'))){
-                if(Hash::check($request->input('old_password'), $user->password)) {
-                    $user->password = Hash::make($request->input('password'));
-                }
-                else{
-                    $error = "Password not changed !";
-                }
+        if(!empty($request->input('old_password'))){
+            if(Hash::check($request->input('old_password'), $user->password)) {
+                $user->password = Hash::make($request->input('password'));
             }
-
-            $user->save();
-
-            return redirect("profile/$id");
-            //return view("profile", ['user' => $user, 'error' => $error]);
+            else{
+                return redirect()->back()->withInput()->withErrors(['old_password' => "Password is incorrect.."]);
+            }
         }
-        return redirect("home");
+
+        $user->save();
+
+        return redirect("profile");
     }
 
     /**
@@ -175,7 +139,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|alpha_num|min:4|max:16', 'email' => 'required|email',
-            'first_name' => 'string|min:3', 'last_name' => 'string|min:3',
+            'firstname' => 'string|min:3', 'lastname' => 'string|min:3',
             'old_password' => 'required_with_all:password',
             'password' => 'required_with_all:password_confirmation|min:3|confirmed',
             'password_confirmation' => 'required_with_all:old_password'
