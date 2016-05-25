@@ -25,9 +25,18 @@ class User extends Authenticatable
     return $this->hasMany(GuildMember::class);
   }
 
+  public function group_members()
+  {
+    return $this->hasMany(GroupMember::class);
+  }
+
   public function groups()
   {
-    return $this->hasManyThrough(Group::class, GroupMember::class);
+    return $this->belongsToMany(Group::class, 'group_members');
+  }
+
+  public function guilds(){
+    return $this->belongsToMany(Guild::class, 'guild_members');
   }
 
   public function events()
@@ -58,4 +67,11 @@ class User extends Authenticatable
    *  - scoper à un serveur spécifique
    */
 
+  public function scopememberOfGuild($query, $guild){
+    return $query->getModel()->guild_members()->where('guild_id', $guild->id);
+  }
+
+  public function scopememberOfGroup($query, $group){
+    return $query->getModel()->group_members()->where('group_id', $group->id);
+  }
 }
