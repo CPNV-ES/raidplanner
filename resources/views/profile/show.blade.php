@@ -13,6 +13,7 @@
     <p>Email : {{ $user->email }}</p>
     <p>First name : {{ $user->firstname }}</p>
     <p>Last name : {{ $user->lastname }}</p>
+    {{ link_to_route('profile.edit', 'edit your profile', ['domain' => $subdomain]) }}
 </div>
 @endsection
 

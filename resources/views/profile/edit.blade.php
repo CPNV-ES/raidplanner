@@ -7,10 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Profile</div>
                 <div class="panel-body">
-
-                    {{var_dump($errors)}}
-
-                    {{ Form::model($user, ['action' => ['UserController@update', $user->id], 'method' => 'put', 'class' => 'form-horizontal']) }}
+                    {{ Form::model($user, ['route' => ['profile.edit', $subdomain], 'method' => 'put', 'class' => 'form-horizontal']) }}
 
 
                     {{ Form::label('username', 'Username') }}

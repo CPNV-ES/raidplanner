@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Raidplanner</title>
+    <title>Public Raidplanner</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -40,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Raidplanner
+                    Public Raidplanner
                 </a>
             </div>
 
@@ -64,10 +64,6 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                                <li>{{ link_to_route('profile.show', 'show your profile', ['subdomain' => $subdomain]) }}</li>
-                                <li>{{ link_to_route('show.my.alliance', 'show my alliance', ['subdomain' => $subdomain]) }}</li>
-                                <li>{{ link_to_route('show.my.guild', 'show my guild', ['subdomain' => $subdomain]) }}</li>
-                                <li>{{ link_to_route('show.my.group', 'show my group', ['subdomain' => $subdomain]) }}</li>
                             </ul>
                         </li>
                     @endif

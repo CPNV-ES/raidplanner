@@ -4,7 +4,7 @@
 
     <h1>Create Alliance</h1>
 
-    {{ Form::open(['route' => 'alliances.store']) }}
+    {{ Form::open(['route' => ['alliances.store', $subdomain]]) }}
     <ul>
 
         <li>

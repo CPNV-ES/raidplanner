@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 
-class ProfileController extends Controller
+class ProfileController extends DomainController
 {
 
     /**

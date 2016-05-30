@@ -5,7 +5,7 @@
 
     <h1>Edition de l'alliance {{$alliance->id}}</h1>
 
-    {{ Form::model($alliance,['method'=>'PUT', 'route'=>['alliances.update',$alliance->id]])}}
+    {{ Form::model($alliance,['method'=>'PUT', 'route' => ['alliances.update', $subdomain, $alliance->id]])}}
 
             {{ Form::label('name', 'Name:') }}
             {{ Form::text('name') }}<br>

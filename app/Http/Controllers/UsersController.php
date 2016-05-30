@@ -7,9 +7,10 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
-class UsersController extends Controller
+class UsersController extends DomainController
 {
     use AuthenticatesAndRegistersUsers;
 
@@ -47,7 +48,7 @@ class UsersController extends Controller
 
         $this->sendConfirmationMail($user);
 
-        return redirect('/');
+        return redirect()->route("login");
     }
 
     /**
@@ -58,7 +59,7 @@ class UsersController extends Controller
      */
     public function show()
     {
-        return view('profile', ['user' => Auth::user(), 'error' => ""]);
+        return view('profile.show', ['user' => Auth::user(), 'error' => ""]);
     }
 
 
@@ -69,7 +70,7 @@ class UsersController extends Controller
      */
     public function edit()
     {
-        return view('edit_profile', ['user' => Auth::user()]);
+        return view('profile.edit', ['user' => Auth::user()]);
     }
 
 
@@ -101,7 +102,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        return redirect("profile");
+        return redirect()->route("profile.show", $request->subdomain);
     }
 
     /**

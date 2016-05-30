@@ -7,7 +7,7 @@ use App\Guild;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
-class GuildController extends Controller
+class GuildsController extends DomainController
 {
     /**
      * Display a listing of the resource.

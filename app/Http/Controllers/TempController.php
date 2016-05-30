@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 
-class TempController extends Controller
+class TempController extends DomainController
 {
 
     use AuthenticatesAndRegistersUsers;
@@ -55,6 +55,17 @@ class TempController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+    {
+        dd(false);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showMy(Request $request)
     {
         dd(false);
     }

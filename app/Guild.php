@@ -22,4 +22,8 @@ class Guild extends Model
         return $this->belongsToMany(User::class, 'guild_members')->wherePivot('role', $role);
     }
 
+    public function scopeonServer($query, $server){
+        return $query->where('server_id', $server->id);
+    }
+
 }

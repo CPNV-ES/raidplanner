@@ -17,7 +17,7 @@ class SubdomainResource
      */
     public function handle($request, Closure $next)
     {
-        preg_match('/^([a-z]+)\.[a-z]+$/', $request->route()->getName(), $matches);
+        preg_match('/^([a-z]+)\.[a-z]+/', $request->route()->getName(), $matches);
 
         switch($matches[1]){
             case 'alliances' :
@@ -37,7 +37,6 @@ class SubdomainResource
                 }
                 break;
         }
-        
         return $next($request);
     }
 }

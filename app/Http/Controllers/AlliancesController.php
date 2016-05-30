@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Guild;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use App\Alliance;
+use Illuminate\Support\Facades\Auth;
 
-class AllianceController extends Controller
+class AlliancesController extends DomainController
 {
 
     /**
@@ -42,11 +41,15 @@ class AllianceController extends Controller
      */
     public function store(Request $request)
     {
+        $guild =  Auth::getUser()->guilds()->onServer($this->server())->firstOrFail();
         $alliance = new Alliance();
         $alliance->name = $request->name;
         $alliance->icon_path = $request->icon_path;
         $alliance->save();
-        return redirect()->route('alliances.index');
+        $guild->alliance()->associate($alliance);
+        $guild->alliance_role = 'master';
+        $guild->save();
+        return redirect()->route('alliances.index', $request->subdomain);
     }
     /**
      * Display the specified resource.
@@ -54,10 +57,9 @@ class AllianceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Alliance $alliance)
     {
-        $alliance = Alliance::find($id);
-        return view('alliances.show')->with('alliance',$alliance);
+        return view('alliances.show')->with('alliance', $alliance->get()[0]);
     }
 
     /**
@@ -66,10 +68,10 @@ class AllianceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Alliance $alliance)
     {
-        $alliance = Alliance::find($id);
-        $guilds = Guild::all();
+        $alliance = $alliance->get()[0];
+        $guilds = $alliance->guilds;
         return view('alliances.edit',compact('alliance','guilds'));
     }
 
@@ -80,19 +82,19 @@ class AllianceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Alliance $alliance)
     {
-        $alliance = Alliance::find($id);
+        $alliance = $alliance->get()[0];
 
-        if (isset($request->name)){
-            $alliance->name = $request->name;
+        if (!empty($request->input('name'))){
+            $alliance->name = $request->input('name');
         }
 
-        if (isset($request->icon_path)){
-            $alliance->icon_path = $request->icon_path;
+        if (!empty($request->input('icon_path'))){
+            $alliance->icon_path = $request->input('icon_path');
         }
         $alliance->save();
-        return redirect('alliances');
+        return redirect()->route('alliances.show', [$alliance->id, 'subdomain' => $request->subdomain]);
 
     }
 
@@ -102,10 +104,10 @@ class AllianceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Alliance $alliance)
     {
-        $alliance = Alliance::find($id);
+        dd($alliance);
         $alliance->delete();
-        return redirect()->route('alliances.index');
+        return redirect()->route('alliances.index', $request->subdomain);
     }
 }

@@ -47,7 +47,6 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -64,10 +63,6 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                                <li>{{ link_to_route('profile.show', 'show your profile', ['subdomain' => $subdomain]) }}</li>
-                                <li>{{ link_to_route('show.my.alliance', 'show my alliance', ['subdomain' => $subdomain]) }}</li>
-                                <li>{{ link_to_route('show.my.guild', 'show my guild', ['subdomain' => $subdomain]) }}</li>
-                                <li>{{ link_to_route('show.my.group', 'show my group', ['subdomain' => $subdomain]) }}</li>
                             </ul>
                         </li>
                     @endif
