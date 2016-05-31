@@ -12,7 +12,7 @@
                     la guilde</a></p>
                 <p><a href="guilds/{{ $guild->id }}/edit" class="btn btn-default" role="button">Modifier la guilde</a></p>
 
-                {{ Form::open(['method' => 'DELETE', 'route' => ['guilds.destroy',$guild->id]]) }}
+                {{ Form::open(['method' => 'DELETE', 'route' => ['guilds.destroy',$subdomain, $guild->id]]) }}
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                 {{ Form::close() }}
 

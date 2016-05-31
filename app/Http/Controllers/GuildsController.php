@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Alliance;
 use App\Guild;
+use App\GuildMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 
 class GuildsController extends DomainController
@@ -16,7 +18,7 @@ class GuildsController extends DomainController
      */
     public function index()
     {
-        $guilds = Guild::all();
+        $guilds = Guild::onServer($this->server())->get();
         return view ('guilds.index')->with('guilds', $guilds);
     }
 
@@ -27,9 +29,7 @@ class GuildsController extends DomainController
      */
     public function create()
     {
-
         return view('guilds.create');
-        $guild->save();
     }
 
     /**
@@ -41,14 +41,12 @@ class GuildsController extends DomainController
     public function store(Request $request)
     {
         $guild = new Guild();
-        $guild->name = $request->name;
-        $guild->icon_path = $request->icon_path;
-        $guild->server_id = 1;
-        $guild->alliance_id = 1;
-        $guild->alliance_role = 1;
+        $guild->name = $request->input('name');
+        $guild->icon_path = $request->input('icon_path');
+        $guild->server_id = $this->server()->id;
         $guild->save();
-        return redirect()->route('guilds.index');
-
+        GuildMember::create(['user_id' => Auth::getUser()->id, 'guild_id' => $guild->id, 'role' => 'master']);
+        return redirect()->route('guilds.index', $this->server()->slug);
     }
 
     /**
@@ -57,11 +55,9 @@ class GuildsController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $guild = Guild::find($id);
-        return view ('guilds.show')->with('guild', $guild);
-
+        return view ('guilds.show')->with('guild', Guild::find($request->guilds));
     }
 
     /**
@@ -70,11 +66,9 @@ class GuildsController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $guild=Guild::find($id);
-        $guild->save();
-        return view('guilds.edit',compact('guild'));
+        return view('guilds.edit')->with('guild', Guild::find($request->guilds));
     }
 
     /**
@@ -84,14 +78,13 @@ class GuildsController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-
-        $guild=Guild::find($id);
-        $guild->name = $request->name;
-        $guild->icon_path = $request->icon_path;
+        $guild=Guild::find($request->guilds);
+        $guild->name = $request->input('name');
+        $guild->icon_path = $request->input('icon_path');
         $guild->save();
-        return redirect('guilds');
+        return redirect('guilds.index', $this->server()->slug);
     }
 
     /**
@@ -100,10 +93,10 @@ class GuildsController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $guild=Guild::find($id);
+        $guild=Guild::find($request->guilds);
         $guild->delete();
-        return redirect()->route('guilds.index');
+        return redirect()->route('guilds.index', $this->server()->slug);
     }
 }

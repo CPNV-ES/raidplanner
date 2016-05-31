@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-md-4">
         <h1>Modifier la guilde:</br> {{ $guild->name }}</h1>
-        {!! Form::model($guild,['method' => 'PATCH','route'=>['guilds.update',$guild->id]]) !!}
+        {!! Form::model($guild,['method' => 'PATCH', 'route' => ['guilds.update', $subdomain, $guild->id]]) !!}
         <div class="form-group">
             {!! Form::label('Name', 'Nom:') !!}
             {!! Form::text('name',null,['class'=>'form-control']) !!}

@@ -4,7 +4,7 @@
     <div class="col-md-4">
         <h1>Créer une guilde</h1>
 
-        {!! Form::open(['route' => 'guilds.store']) !!}
+        {!! Form::open(['route' => ['guilds.store', $subdomain]]) !!}
 
         <div class="form-group">
             {!! Form::label('name', 'Nom:') !!}

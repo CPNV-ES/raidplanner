@@ -18,6 +18,16 @@ class Guild extends Model
         return $this->belongsTo(Alliance::class);
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'guild_members')->withPivot('role');
+    }
+
+    public function guild_members()
+    {
+        return $this->hasMany(GuildMember::class);
+    }
+
     public function usersByRole($role){
         return $this->belongsToMany(User::class, 'guild_members')->wherePivot('role', $role);
     }
