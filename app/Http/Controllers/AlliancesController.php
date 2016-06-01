@@ -57,9 +57,9 @@ class AlliancesController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Alliance $alliance)
+    public function show(Request $request)
     {
-        return view('alliances.show')->with('alliance', $alliance->get()[0]);
+        return view('alliances.show')->with('alliance', Alliance::find($request->alliances));
     }
 
     /**
@@ -68,9 +68,9 @@ class AlliancesController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Alliance $alliance)
+    public function edit(Request $request)
     {
-        $alliance = $alliance->get()[0];
+        $alliance = Alliance::find($request->alliances);
         $guilds = $alliance->guilds;
         return view('alliances.edit',compact('alliance','guilds'));
     }
@@ -82,9 +82,9 @@ class AlliancesController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Alliance $alliance)
+    public function update(Request $request)
     {
-        $alliance = $alliance->get()[0];
+        $alliance = Alliance::find($request->alliances);
 
         if (!empty($request->input('name'))){
             $alliance->name = $request->input('name');
@@ -95,7 +95,6 @@ class AlliancesController extends DomainController
         }
         $alliance->save();
         return redirect()->route('alliances.show', [$alliance->id, 'subdomain' => $request->subdomain]);
-
     }
 
     /**
@@ -104,9 +103,9 @@ class AlliancesController extends DomainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Alliance $alliance)
+    public function destroy(Request $request)
     {
-        dd($alliance);
+        $alliance = Alliance::find($request->alliances);
         $alliance->delete();
         return redirect()->route('alliances.index', $request->subdomain);
     }

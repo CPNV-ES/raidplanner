@@ -24,6 +24,7 @@ class SubdomainResource
                 if(!isset($request->alliances)){
                     break;
                 }
+
                 if(Alliance::findOrFail($request->alliances)->servers[0]->slug != $request->subdomain){
                     abort(403, "Resource does not exist");
                 }
