@@ -24,6 +24,9 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
+    Route::get('/role', function(){
+        dd(Role::test());
+    });
 
     Route::group(['domain' => 'raidplanner.dev'], function(){
         Route::get('/', function () {

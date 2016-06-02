@@ -1,18 +1,10 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Classes;
 
-
-use App\Guild;
-use App\Alliance;
-use App\Group;
-use Closure;
-use Illuminate\Support\Facades\Auth;
 use Mockery\CountValidator\Exception;
 
-class Role
-{
-
+class Role{
     private $roles = [
         'groups' => [
             'edit' => ['master'],
@@ -37,72 +29,78 @@ class Role
         ]
     ];
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        preg_match('/^([a-z]+)\.([a-z\_]+)$/', $request->route()->getName(), $matches);
+    public function haveRoleFor($route, $user, $target){
+        preg_match('/^([a-z]+)\.([a-z\_]+)$/', $route, $matches);
         $resource = $matches[1];
         $action = $matches[2];
 
         if(!array_key_exists($action, $this->roles[$resource])){
-            return $next($request);
+            return true;
         }
-
-        $user = Auth::getUser();
 
         switch($resource) {
             case "groups" :
-                $role = $this->getGroupRole($user, Group::find($request->groups));
+                $role = $this->getGroupRole($user, $target);
                 break;
             case "guilds" :
-                $role = $this->getGuildRole($user, Guild::find($request->guilds));
+                $role = $this->getGuildRole($user, $target);
                 break;
             case "alliances" :
-                $role = $this->getAllianceRole($user, Alliance::find($request->alliances));
+                $role = $this->getAllianceRole($user, $target);
                 break;
             default :
-                abort(500, "Internal Server Error");
+                return false;
                 break;
         }
 
-        if(in_array($role, $this->roles[$resource][$action])){
-            return $next($request);
+        if(empty($role)){
+            return false;
         }
 
-        abort(403, "Access denied");
+        if(!in_array($role, $this->roles[$resource][$action])){
+            return false;
+        }
+
+        return true;
     }
+
     private function getGuildRole($user, $guild){
-        $memberOf = $user->memberOfGuild($guild)->firstOrFail();
+        $memberOf = $user->memberOfGuild($guild)->first();
+
+        if(empty($memberOf)){
+            return false;
+        }
 
         return $memberOf->role;
     }
-    protected function getAllianceRole($user, $alliance){
+
+    private function getAllianceRole($user, $alliance){
         $guilds = $alliance->guilds;
 
         if($guilds->isEmpty()){
-            throw new Exception();
+            throw new Exception("No guild in Alliance {$alliance->id} !");
         }
 
         foreach($guilds as $guild){
             if($guild->alliance_role == "master"){
-                foreach($guild->usersByRole('master')->get() as $guild_user){
-                    if($user->id == $guild_user->id){
-                        return "master";
-                    }
+                if($user->id == $guild->usersByRole('master')->first()->id){
+                    return "master";
                 }
+
+                /* User not master of the master guild */
+                return null;
             }
         }
 
-        throw new Exception();
+        throw new Exception("No master guild in Alliance {$alliance->id} !");
     }
+
     private function getGroupRole($user, $group){
-        $memberOf = $user->memberOfGroup($group)->firstOrFail();
+        $memberOf = $user->memberOfGroup($group)->first();
+
+        if(empty($memberOf)){
+            return false;
+        }
 
         return $memberOf->role;
     }
