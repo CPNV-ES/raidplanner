@@ -1,0 +1,37 @@
+= Raidplanner
+Jonathan Zaehringer <jonathan.zaehringer@cpnv.ch>, Nolan Rigo <nolan.rigo@cpnv.ch>, Sebastien Martin <sebastien.martin@cpnv.ch>, Marco Visalli <marco.visalli@cpnv.ch>
+v0.1, 22.05.2016
+:toc:
+:homepage: http:://github.com/CPNV-ES/raidplanner
+
+Documentation technique sur `raidplanner`.
+
+== Concept
+Raidplanner est un système de planification d'évenement via un calandier.
+Ce système est inspiré des solutions déjà utilisé par les communautés de MMORPG.
+Le concept est d'offrir une gestion d'événement mais aussi une structure propore au jeux vidéos cible.
+Pour cette version, nous avons décidé de prendre l'exemple de Dofus pour élaboré le système
+mais aussi de ne pas restreindre pour pouvoir intégré d'autre système de MMORPG.
+
+Tout les MMORPGS ont une structure de `guilde` qui est une équipe de joueur et
+d'une `alliance` ou `faction` selon le jeu qui regroupe un ensemble de `guilde`.
+Le tout est séparé par `serveur` permet au jeu de pouvoir supporté les charges de joueurs sur un même `serveur`.
+Nous avons rajouté le concept de `groupe` pour pouvoir organisé des événements hors de la structure de `guildes`
+
+A cette stucture s'ajoute les conditions propre au jeu qui seront détaillé ensuite.
+
+=== Dofus
+Dans Dofus, il existe des mécanismes qui sont de base dans le jeu;
+Le joueur peut joué en multi-compte, cela signifie qu'il peut jouer plusieurs personnages en même temps.
+Cela signifique qu'il peut procédé plusieurs `guildes`, cependant les grandes `guildes` empéche les joueurs de le faire pour des raisons d'espionnage.
+Ce qui nous permit de choisir la régle que chaques joueurs ne peut avoir qu'une `guilde` par serveur.
+Pour finir les `alliances` sont des regroupements de guilds.
+
+=== Role
+A ce système se rajoute une gestion des `rôles` pour permettre les divers action par rapport au `guildes` et au `alliances`.
+Pour ce faire, nous avons réalisé un diagramme `Use case` permettant de montré les différents possibilités d'action des utilisateurs.
+
+== Technologie
+Les téchnologies choisi sont le framework Laravel 5.2 pour des raisons de popularité.
+En générale, ce framework a dépassé la popularité de Symphony ce qui a motivé notre choix d'apprentissage vers cette solution.
+Pour la base de donnée, nous avons choisi MySQL pour gardé une base donne de tous les membres de l'équipe.

@@ -1,0 +1,29 @@
+== Controller User
+
+Cette partie décrit le fonctionnement du `controller` nommé `UsersController`
+
+=== Route
+
+Voici la liste concernant les routes utilisant ce `controller`
+
+
+=== Profil
+
+Ce `controller` est utilisé pour visonné le profile d'un autre utilisateur en lecture seulement.
+
+
+=== Creation
+Il est aussi utilisé pour la procédure d'inscription des utilisateurs sur le site.
+L'inscription se passe en deux temps, une première phase classique qui crée un utilisateur selon les informations fournis par le formulaire.
+Cette utilisateur n'est pas activé, il est nécessaire que l'utilisateur valide son compte via le mail envoyé à sa boite mail.
+
+==== Validation
+
+Le formulaire reçu est vérifé par `validator` une solution présente dans Laravel.
+Il est nécessaire :
+[TODO....]
+
+==== Amélioration
+
+Il n'y a actuellement aucun système sécurisant l'inscirption de robot sur le site.
+Il est donc primordiale qu'en cas de mis en production du projet qu'un système sois mis en place.
