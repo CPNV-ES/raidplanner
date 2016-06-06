@@ -61,6 +61,13 @@ class AlliancesController extends DomainController
     {
         return view('alliances.show')->with('alliance', Alliance::find($request->alliances));
     }
+    
+    public function showMy()
+    {
+        //dd(Auth::getUser()->guilds()->onServer($this->server())->get());
+        $alliance = Auth::getUser()->guilds()->onServer($this->server())->firstOrFail()->alliance;
+        return view('alliances.show')->with('alliance', $alliance);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -108,5 +115,19 @@ class AlliancesController extends DomainController
         $alliance = Alliance::find($request->alliances);
         $alliance->delete();
         return redirect()->route('alliances.index', $request->subdomain);
+    }
+
+    /**
+     * Validate the user register request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateCreateAlliances(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|alpha_num|min:3|max:16',
+            'icon' => 'required|min:5'
+        ]);
     }
 }
