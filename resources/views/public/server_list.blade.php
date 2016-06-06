@@ -8,7 +8,13 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    <ul>
+                        @foreach ($servers as $server)
+
+                            <li>{{ link_to_route('app.home', $server->name, ['subdomain' => $server->slug]) }}</li>
+
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>

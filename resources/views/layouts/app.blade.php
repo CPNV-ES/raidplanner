@@ -50,6 +50,14 @@
                     <li><a href="{{ url('/home') }}">Home</a></li>
                 </ul>
 
+                <ul class="nav navbar-nav">
+                    <li>{{ link_to_route('alliances.index', 'Alliances', ['subdomain' => $subdomain]) }}</li>
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li>{{ link_to_route('guilds.index', 'Guilds', ['subdomain' => $subdomain]) }}</li>
+                </ul>
+
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
@@ -63,8 +71,9 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li style="text-align: center;border-bottom: 1px solid #080808">{{ Auth::getUser()->username }}</li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                                <li>{{ link_to_route('profile.show', 'show your profile', ['subdomain' => $subdomain]) }}</li>
+                                <li>{{ link_to_route('profile.show', 'show my profile', ['subdomain' => $subdomain]) }}</li>
                                 <li>{{ link_to_route('show.my.alliance', 'show my alliance', ['subdomain' => $subdomain]) }}</li>
                                 <li>{{ link_to_route('show.my.guild', 'show my guild', ['subdomain' => $subdomain]) }}</li>
                                 <li>{{ link_to_route('show.my.group', 'show my group', ['subdomain' => $subdomain]) }}</li>

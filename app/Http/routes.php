@@ -24,19 +24,12 @@
 */
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/role', function(){
-        dd(Role::test());
-    });
 
     Route::group(['domain' => 'raidplanner.dev'], function(){
-        Route::get('/', function () {
-            return view('public.welcome');
-        })->name('public.welcome');
+        Route::get('/', 'PublicController@welcome')->name('public.welcome');
 
         Route::group(['middleware' => ['auth']], function () {
-            Route::get('home', function () {
-                return view('public.home');
-            })->name('public.home');
+            Route::get('server_list', 'PublicController@server_list')->name('public.server_list');
         });
 
         Route::get('validate/{id}/{remember_token}', 'UsersController@validateRegisterToken');
