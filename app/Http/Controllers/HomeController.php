@@ -17,8 +17,8 @@ class HomeController extends DomainController
         return view('welcome');
     }
 
-    public function home()
+    public function news()
     {
-        return view('home');
+        return view('news');
     }
 }

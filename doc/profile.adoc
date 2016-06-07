@@ -1,0 +1,16 @@
+== Controller Profile
+
+Cette partie décrit le fonctionnement du `controller` nommé `ProfileController`
+
+=== Route
+
+Voici la liste concernant les routes utilisant ce `controller`
+
+[source, php, indent=0]
+----
+include::../app/Http/routes.php[lines=79..85]
+----
+
+=== Profile
+
+Ce controller permet de visionner les profiles d'autres utilisateurs.

@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="error_section">
-    @if (!empty("error"))
+    @if (isset($error) && !empty($error))
         <span class="help-block">
             <strong>{{ $error }}</strong>
         </span>
@@ -13,7 +13,9 @@
     <p>Email : {{ $user->email }}</p>
     <p>First name : {{ $user->firstname }}</p>
     <p>Last name : {{ $user->lastname }}</p>
-    {{ link_to_route('profile.edit', 'edit your profile', ['domain' => $subdomain]) }}
+    @if (isset($editable))
+        {{ link_to_route('profile.edit', 'edit your profile', ['domain' => $subdomain]) }}
+    @endif
 </div>
 @endsection
 

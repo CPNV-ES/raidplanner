@@ -1,0 +1,32 @@
+== Route
+
+Cette partie décrit le fonctionnement des routes présents dans `raidplanner`
+
+[source, php]
+----
+include::../app/Http/routes.php[lines=25..96]
+----
+
+=== Découpage du site
+
+Le site fonctionne en deux partie.
+
+==== Partie public
+
+La partie public qui regroupe les informations concernant la platforme.
+Elle intégre l'authentification qui est unifié entre cette partie et la partie 'application'.
+Depuis la partie public, il est possible de listé tous les serveurs où il est possible de naviguer.
+
+==== Partie application
+
+Pour accéder à cette partie, il est nécessaire de choisir un server (`subdomain`).
+Cette partie regroupe la totalité des fonctionnalités de l'application.
+Il est possible de modifié son profile qui est visionable avec les informations spécifiques au serveur comme ces `archétypes` (personnage).
+
+=== Restful
+
+Les ressources `guilds`, `alliances` et `groups` sont des routes purement `Restful`.
+Les routes pour permettre l'édition des membres ont été rajouter.
+
+
+Les `short link` permettent de simplifé les chemins pour accéder au ressource propre à l'utilisateur authentifié.

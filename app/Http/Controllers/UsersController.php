@@ -59,7 +59,7 @@ class UsersController extends DomainController
      */
     public function show()
     {
-        return view('profile.show', ['user' => Auth::user(), 'error' => ""]);
+        return view('profile.show', ['user' => Auth::user(), 'editable' => true]);
     }
 
 
@@ -131,7 +131,7 @@ class UsersController extends DomainController
     }
 
     /**
-     * Validate the user register request.
+     * Validate the profile update request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return void

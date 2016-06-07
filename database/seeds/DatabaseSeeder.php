@@ -112,6 +112,19 @@ class DatabaseSeeder extends Seeder
     ]);
     $seb->preferenced_server()->associate($mylaise)->save();
 
+    // User Seb
+    $manu = User::create([
+        'username' => 'Barchich',
+        'email' => 'emmanuel.barchichat@cpnv.ch',
+        'password' => Hash::make('secret'),
+        'firstname' => 'Emmanuel',
+        'lastname' => 'Barchichat',
+        'birthday' => '1993-04-25',
+        'remember_token' => str_random(40),
+        'valid' => true
+    ]);
+    $manu->preferenced_server()->associate($sumens)->save();
+
     // Alliance
     $alliancesolo = New Alliance;
     $alliancesolo->name = 'Alliance Solo';
@@ -143,7 +156,8 @@ class DatabaseSeeder extends Seeder
     $chevalierdemeraude->alliance_role = "master";
     $chevalierdemeraude->save();
 
-    $jo->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'master']);
+    $manu->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'master']);
+    $jo->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'officer']);
 
     $overflew = Group::create([
       'name' => 'Overflew'

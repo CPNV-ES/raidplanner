@@ -25,6 +25,7 @@
 
 Route::group(['middleware' => 'web'], function () {
 
+    /* Route for public site */
     Route::group(['domain' => 'raidplanner.dev'], function(){
         Route::get('/', 'PublicController@welcome')->name('public.welcome');
 
@@ -32,6 +33,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('server_list', 'PublicController@server_list')->name('public.server_list');
         });
 
+        /* Validation of user */
         Route::get('validate/{id}/{remember_token}', 'UsersController@validateRegisterToken');
     });
 
@@ -46,9 +48,10 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['domain' => '{subdomain}.raidplanner.dev', 'middleware' => ['auth']], function (){
 
+        /* base route for app site */
         Route::get('/', 'HomeController@welcome')->name('app.welcome');
 
-        Route::get('/home', 'HomeController@home')->name('app.home');
+        Route::get('/news', 'HomeController@news')->name('app.news');
 
         Route::group(['middleware' => ['subdomain.resource']], function(){
             /* Short link */

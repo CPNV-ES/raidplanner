@@ -3,28 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Support\Facades\Mail;
 use Validator;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class ProfileController extends DomainController
 {
+    /**
+     * Display all resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('profile.index', ['users' => User::all()]);
+    }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $user = User::find($id);
+        $user = User::find($request->user);
 
-        return view('profile', ['user' => $user, 'error' => ""]);
+        return view('profile.show', ['user' => $user]);
     }
 }
