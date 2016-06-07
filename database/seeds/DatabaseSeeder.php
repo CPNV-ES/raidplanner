@@ -108,7 +108,7 @@ class DatabaseSeeder extends Seeder
       'lastname' => 'Martin',
       'birthday' => '1992-09-01',
       'remember_token' => str_random(40),
-      'valid' => false
+      'valid' => true
     ]);
     $seb->preferenced_server()->associate($mylaise)->save();
 

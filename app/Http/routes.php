@@ -55,7 +55,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['middleware' => ['subdomain.resource']], function(){
             /* Short link */
-            Route::get('my/alliance', 'TempController@showMy')->name('show.my.alliance');
+            Route::get('my/alliance', 'AlliancesController@showMy')->name('show.my.alliance');
             Route::get('my/guild', 'TempController@showMy')->name('show.my.guild');
             Route::get('my/group', 'TempController@showMy')->name('show.my.group');
 
