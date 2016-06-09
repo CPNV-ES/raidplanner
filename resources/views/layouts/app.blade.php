@@ -51,6 +51,10 @@
                 </ul>
 
                 <ul class="nav navbar-nav">
+                    <li>{{ link_to_route('users.profiles.index', 'Users', ['subdomain' => $subdomain]) }}</li>
+                </ul>
+
+                <ul class="nav navbar-nav">
                     <li>{{ link_to_route('alliances.index', 'Alliances', ['subdomain' => $subdomain]) }}</li>
                 </ul>
 

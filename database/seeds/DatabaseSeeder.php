@@ -156,8 +156,8 @@ class DatabaseSeeder extends Seeder
     $chevalierdemeraude->alliance_role = "master";
     $chevalierdemeraude->save();
 
-    $manu->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'master']);
-    $jo->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'officer']);
+    $manu->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'officer']);
+    $jo->guild_members()->create(['guild_id' => $lepeedophil->id, 'role' => 'master']);
 
     $overflew = Group::create([
       'name' => 'Overflew'

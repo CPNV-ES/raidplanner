@@ -56,7 +56,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['middleware' => ['subdomain.resource']], function(){
             /* Short link */
             Route::get('my/alliance', 'AlliancesController@showMy')->name('show.my.alliance');
-            Route::get('my/guild', 'TempController@showMy')->name('show.my.guild');
+            Route::get('my/guild', 'GuildsController@showMy')->name('show.my.guild');
             Route::get('my/group', 'TempController@showMy')->name('show.my.group');
 
             Route::group(['middleware' => ['role']], function() {
@@ -77,10 +77,12 @@ Route::group(['middleware' => 'web'], function () {
             });
         });
 
+        /* Show all user having a guild on server */
+        Route::get('users', 'ProfilesController@index')->name('users.profiles.index');
         /* Route for showing profile of users */
         Route::group(['prefix' => 'users/{user}'], function() {
-            Route::get('/', 'ProfileController@show');
-            Route::get('/profile', 'ProfileController@show')->name('user.profile.show');
+            Route::get('/', 'ProfilesController@show');
+            Route::get('/profile', 'ProfilesController@show')->name('user.profiles.show');
         });
 
         /* Show and edit the personal profile */
@@ -89,7 +91,5 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('edit', 'UsersController@edit')->name('profile.edit');
             Route::put('edit', ['before' => 'csrf', 'uses' => 'UsersController@update']);
         });
-
-
     });
 });

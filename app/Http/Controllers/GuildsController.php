@@ -59,6 +59,21 @@ class GuildsController extends DomainController
     {
         return view ('guilds.show')->with('guild', Guild::find($request->guilds));
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showMy()
+    {
+        $guild = Auth::getUser()->guilds()->onServer($this->server())->first();
+        if($guild == null){
+            abort('403', "You don't have guild on " + title_case($this->server()->slug));
+        }
+        return view ('guilds.show')->with('guild', $guild);
+    }
+
 
     /**
      * Show the form for editing the specified resource.

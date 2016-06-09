@@ -18,7 +18,7 @@ class CreateGuildMembersTable extends Migration
       $table->integer('guild_id')->unsigned();
       $table->integer('user_id')->unsigned();
 
-      $table->enum('role', ['master', 'officier', 'member'])->default('member');
+      $table->enum('role', ['master', 'officer', 'member'])->default('member');
 
       $table->timestamps();
     });

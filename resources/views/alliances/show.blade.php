@@ -24,7 +24,7 @@
                         <tr>
                             <td>{{ $guild->alliance_role }}</td>
                             <td><img src="{{ $guild->icon_path }}" alt="{{ $guild->name }} logo"></td>
-                            <td>{{ $guild->name }}</td>
+                            <td>{{ link_to_route('guilds.show', $guild->name, ['subdomain' => $subdomain, $guild->id]) }}</td>
                         </tr>
 
                     @endforeach

@@ -59,7 +59,8 @@ class UsersController extends DomainController
      */
     public function show()
     {
-        return view('profile.show', ['user' => Auth::user(), 'editable' => true]);
+        $user = Auth::getUser();
+        return view('profile.show', ['user' => $user, 'editable' => true, 'guild' => $user->guilds()->onServer($this->server())->first()]);
     }
 
 

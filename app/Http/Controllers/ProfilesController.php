@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
 use App\User;
+use App\Guild;
 
-class ProfileController extends DomainController
+class ProfilesController extends DomainController
 {
     /**
      * Display all resource.
@@ -16,7 +17,14 @@ class ProfileController extends DomainController
      */
     public function index()
     {
-        return view('profile.index', ['users' => User::all()]);
+        $users = [];
+        $guilds = Guild::onServer($this->server())->with('members')->get();
+        foreach($guilds as $guild){
+            foreach($guild->members as $member) {
+                $users[] = $member;
+            }
+        }
+        return view('profile.index', ['users' => $users]);
     }
 
     /**
@@ -29,6 +37,6 @@ class ProfileController extends DomainController
     {
         $user = User::find($request->user);
 
-        return view('profile.show', ['user' => $user]);
+        return view('profile.show', ['user' => $user, 'guild' => $user->guilds()->onServer($this->server())->first()]);
     }
 }

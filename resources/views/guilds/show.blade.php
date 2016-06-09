@@ -15,28 +15,28 @@
                 @endif
 
                 @if ($guild->alliance)
-                    <p>Fait partie de l'alliance: <b>{{ $guild->alliance->name }}</b></p>
+                    <p>Fait partie de l'alliance: <b>{{ link_to_route('alliances.show', $guild->alliance->name, ['domain' => $subdomain, $guild->alliance->id]) }}</b></p>
                 @else
                     <p>La guilde <b>{{ $guild->name }}</b> n'appartient à aucune alliance</p>
                 @endif
                 <table class="table table-hover">
-                    {{ $guild->members }}
                     <thead>
                     <tr>
-                        <th>Classe</th>
-                        <th>Pseudo</th>
-                        <th>Rang</th>
+                        <th>Username</th>
+                        <th>Role</th>
                     </tr>
                     </thead>
-                    <td>Osa</td>
-                    <td>xX_THEOSA_Xx</td>
-                    <td>membre</td>
+                    @foreach($guild->members as $member)
+                    <tr>
+                        <td>{{ link_to_route('user.profiles.show', $member->username, ['domain' => $subdomain, $member->id]) }}</td>
+                        <td>{{$member->pivot->role}}</td>
+                    </tr>
+                    @endforeach
 
                 </table>
 
             </div>
         </div>
     </div>
-
 
 @endsection
