@@ -38,12 +38,12 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     /* Login / Logout route */
-    Route::get('login', 'SessionsController@create');
+    Route::get('login', 'SessionsController@create')->name("login");
     Route::post('login', 'SessionsController@store');
-    Route::get('logout', 'SessionsController@destroy');
+    Route::get('logout', 'SessionsController@destroy')->name("logout");;
 
     /* Register route */
-    Route::get('register', 'UsersController@create');
+    Route::get('register', 'UsersController@create')->name("register");;
     Route::post('register', 'UsersController@store');
 
     Route::group(['domain' => '{subdomain}.raidplanner.dev', 'middleware' => ['auth']], function (){

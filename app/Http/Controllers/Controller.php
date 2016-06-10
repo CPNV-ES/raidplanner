@@ -18,7 +18,7 @@ class Controller extends BaseController
         $user->remember_token = str_random(40);
         $user->save();
 
-        $url = 'raidplanner/validate/'.$user->id.'/'.$user->remember_token;
+        $url = 'raidplanner.dev/validate/'.$user->id.'/'.$user->remember_token;
         Mail::send('emails/password_confirmation', ['username' => $user->username, 'url' => $url], function ($message) use ($user){
             $message->to($user->email)->subject('Test');
 

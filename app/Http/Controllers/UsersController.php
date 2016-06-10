@@ -128,7 +128,7 @@ class UsersController extends DomainController
             }
         }
 
-        return redirect('/');
+        return redirect()->route("public.welcome");
     }
 
     /**
