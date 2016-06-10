@@ -1,0 +1,10 @@
+== Mise en production
+
+Cette partie décrit la mise en place du projet.
+
+=== Nom de domaine
+
+Pour le fonctionne des `subdomain` il est nécessaire de redirigé toutes les requestes ayant la structure : {server}.raidplanner.dev.
+Mais aussi de reécrire les requests 'www.raidplanner.dev' en 'raidplanner.dev'.
+
+=== Mail

@@ -14,3 +14,9 @@ include::../app/Http/routes.php[lines=79..85]
 === Profile
 
 Ce controller permet de visionner les profiles d'autres utilisateurs.
+
+=== Personnage
+
+Cette partie n'a malheureusement pas été implémenté.
+La gestion de profile devrait normalement affichier les personnages créent sur le serveur actuelle.
+Et son ajout devrait être possible depuis le profile.

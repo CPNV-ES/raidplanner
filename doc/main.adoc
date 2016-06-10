@@ -1,9 +1,16 @@
 include::./intro.adoc[]
 
+include::./database.adoc[]
+
 include::./route.adoc[]
+
+include::./subdomain.adoc[]
+
+include::./role.adoc[]
 
 include::./user.adoc[]
 
 include::./profile.adoc[]
 
-include::./role.adoc[]
+include::./production.adoc[]
+

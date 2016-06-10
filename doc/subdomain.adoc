@@ -1,0 +1,8 @@
+anchor:subdomain-chapitre[]
+== Subdomain
+
+Pour permettre l'affichage de donnée personnalité selon le choix du serveur.
+
+Nous utilisons deux types de route. Celle qui n'ont pas de subdomain avant le nom de domain : 'raidplanner.dev'.
+
+Et celle qui ont un subdomain qui décrit le serveur demandé : '{server}.raidplanner.dev'

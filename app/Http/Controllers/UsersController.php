@@ -140,7 +140,7 @@ class UsersController extends DomainController
     protected function validateUpdate(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|alpha_num|min:4|max:16', 'email' => 'required|email',
+            'username' => 'required|alpha_num|min:4|max:16|unique:users', 'email' => 'required|email|unique:users',
             'firstname' => 'string|min:3', 'lastname' => 'string|min:3',
             'old_password' => 'required_with_all:password',
             'password' => 'required_with_all:password_confirmation|min:3|confirmed',
@@ -157,7 +157,7 @@ class UsersController extends DomainController
     protected function validateRegister(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|alpha_num|min:4|max:16', 'email' => 'required|email',
+            'username' => 'required|alpha_num|min:4|max:16|unique:users', 'email' => 'required|email|unique:users',
             'password' => 'required|min:3|confirmed', 'password_confirmation' => 'required'
         ]);
     }

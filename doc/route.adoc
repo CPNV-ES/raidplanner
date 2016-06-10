@@ -19,7 +19,7 @@ Depuis la partie public, il est possible de listé tous les serveurs où il est 
 
 ==== Partie application
 
-Pour accéder à cette partie, il est nécessaire de choisir un server (`subdomain`).
+Pour accéder à cette partie, il est nécessaire de choisir un server (`subdomain`) décrit dans le chapitre xref:subdomain-chapitre[subdomain].
 Cette partie regroupe la totalité des fonctionnalités de l'application.
 Il est possible de modifié son profile qui est visionable avec les informations spécifiques au serveur comme ces `archétypes` (personnage).
 
