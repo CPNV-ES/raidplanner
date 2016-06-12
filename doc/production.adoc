@@ -8,3 +8,11 @@ Pour le fonctionne des `subdomain` il est nécessaire de redirigé toutes les re
 Mais aussi de reécrire les requests 'www.raidplanner.dev' en 'raidplanner.dev'.
 
 === Mail
+
+Pour l'envoie de Mail, il est nécessaire de configuré la boite mail d'envoie.
+Pour ce faire nous avons un compte `Gmail` pour tester l'envoie de mail.
+Pour configurer l'envoie, il faut mettre c'est ligne dans le fichier `.env`
+
+----
+include::../.env[lines=17..23]
+----

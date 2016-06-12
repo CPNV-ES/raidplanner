@@ -44,6 +44,9 @@ class SessionsController extends Controller
 
             if(Hash::check($password, $user->password)){
                 if($user->valid != true){
+                    $user->remember_token = str_random(40);
+                    $user->save();
+
                     return $this->sendConfirmationMissing($request, $user);
                 }
 
@@ -89,7 +92,10 @@ class SessionsController extends Controller
      */
     protected function sendConfirmationMissing(Request $request, $user)
     {
-        $this->sendConfirmationMail($user);
+        $user->remember_token = str_random(40);
+        $user->save();
+
+        SendMail::sendConfirmationMail($user);
 
         return redirect()->back()
             ->withInput($request->only($this->loginUsername(), 'remember'))

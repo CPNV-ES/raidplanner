@@ -1,4 +1,5 @@
 anchor:subdomain-chapitre[]
+
 == Subdomain
 
 Pour permettre l'affichage de donnée personnalité selon le choix du serveur.
@@ -6,3 +7,25 @@ Pour permettre l'affichage de donnée personnalité selon le choix du serveur.
 Nous utilisons deux types de route. Celle qui n'ont pas de subdomain avant le nom de domain : 'raidplanner.dev'.
 
 Et celle qui ont un subdomain qui décrit le serveur demandé : '{server}.raidplanner.dev'
+
+=== DomainController
+
+Ce controlleur permet d'injecter dans tout les models qui l'hérite la valeur du subdomain demandé par l'utilisateur dans la vue qui sera envoyé par le controller.
+Cette valeur permet l'écriture de tout les liens sur la page.
+
+[php]
+----
+include::../app/Http/Controllers/DomainController.php[lines=18]
+----
+
+Le controlleur met aussi à disposition le slug du server demandé et son model via la function `server`.
+Le model est cherché dans la base de donnée uniquement si le controller le demande.
+
+[php]
+----
+include::../app/Http/Controllers/DomainController.php[lines=21..26]
+----
+
+=== SubdomainResource
+
+Ce middleware permet de vérifer la présence de la ressource demandée sur le serveur demandé par l'utilisateur.

@@ -158,6 +158,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RoleProvider::class,
+        App\Providers\SendMailProvider::class,
 
     ],
 
@@ -207,6 +208,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Role'      => App\Classes\Facades\Role::class,
+        'SendMail'  => App\Classes\Facades\SendMail::class,
 
     ],
 

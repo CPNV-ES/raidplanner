@@ -26,7 +26,7 @@ class SubdomainResource
                 }
 
                 if(Alliance::findOrFail($request->alliances)->servers[0]->slug != $request->subdomain){
-                    abort(403, "Resource does not exist");
+                    abort(403, "Resource does not exist on " + title_case($request->subdomain));
                 }
                 break;
             case 'guilds' :
@@ -34,7 +34,7 @@ class SubdomainResource
                     break;
                 }
                 if(Guild::findOrFail($request->guilds)->server->slug != $request->subdomain){
-                    abort(403, "Resource does not exist");
+                    abort(403, "Resource does not exist " + title_case($request->subdomain));
                 }
                 break;
         }

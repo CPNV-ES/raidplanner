@@ -47,6 +47,10 @@ Il est nécessaire :
 include::../app/Http/Controllers/UsersController.php[lines=149..162]
 ----
 
+==== Mail
+
+Pour confirmé la validation, une facade est la pour permettre l'envoie du mail de confirmation.
+il est nécessaire de regenerer le token de l'utilisateur avant de l'envoyé par question de sécurité.
 
 ==== Amélioration
 

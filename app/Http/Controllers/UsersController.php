@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use SendMail;
 
 class UsersController extends DomainController
 {
@@ -46,7 +47,10 @@ class UsersController extends DomainController
 
         $user = User::create(['username' => $request->input('username'), 'email' => $request->input('email'), 'password' => Hash::make($request->input('password'))]);
 
-        $this->sendConfirmationMail($user);
+        $user->remember_token = str_random(40);
+        $user->save();
+
+        SendMail::sendConfirmationMail($user);
 
         return redirect()->route("login");
     }
