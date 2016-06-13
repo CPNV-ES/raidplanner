@@ -47,7 +47,7 @@ class UsersController extends DomainController
 
         $user = User::create(['username' => $request->input('username'), 'email' => $request->input('email'), 'password' => Hash::make($request->input('password'))]);
 
-        $user->remember_token = str_random(40);
+        $user->remember_token = User::generate_token();
         $user->save();
 
         SendMail::sendConfirmationMail($user);
@@ -143,8 +143,10 @@ class UsersController extends DomainController
      */
     protected function validateUpdate(Request $request)
     {
+        $user = Auth::getUser();
         $this->validate($request, [
-            'username' => 'required|alpha_num|min:4|max:16|unique:users', 'email' => 'required|email|unique:users',
+            'username' => 'required|alpha_num|min:4|max:16|unique:users,id,'.$user->id,
+            'email' => 'required|email|unique:users,id,' . $user->id,
             'firstname' => 'string|min:3', 'lastname' => 'string|min:3',
             'old_password' => 'required_with_all:password',
             'password' => 'required_with_all:password_confirmation|min:3|confirmed',

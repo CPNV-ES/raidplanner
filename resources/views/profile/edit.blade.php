@@ -12,7 +12,6 @@
 
                     {{ Form::label('username', 'Username') }}
                     {{ Form::text('username', $user->username, ['class' => 'form-control']) }}
-                    +
                     @if ($errors->has('username'))
                         <span class="help-block">
                             <strong>{{ $errors->first('username') }}</strong>
