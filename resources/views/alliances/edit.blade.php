@@ -3,7 +3,7 @@
 @section('content')
 
 
-    <h1>Edition de l'alliance {{$alliance->id}}</h1>
+    <h1>Edition de l'alliance {{$alliance->name}}</h1>
 
     {{ Form::model($alliance,['method'=>'PUT', 'route' => ['alliances.update', $subdomain, $alliance->id]])}}
 
