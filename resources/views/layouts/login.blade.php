@@ -39,9 +39,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Raidplanner
-                </a>
+                {{ link_to_route('public.welcome', 'Raidplanner', [], ['class' => 'navbar-brand']) }}
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">

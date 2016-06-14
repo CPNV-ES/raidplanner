@@ -19,6 +19,10 @@ class User extends Authenticatable
     'valid'
   ];
 
+  public static function generate_token(){
+    return str_random(100);
+  }
+
   // Relationships
   public function guild_members()
   {

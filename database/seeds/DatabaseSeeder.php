@@ -55,9 +55,8 @@ class DatabaseSeeder extends Seeder
       'password' => Hash::make('secret'),
       'firstname' => 'Nolan',
       'lastname' => 'Rigo',
-      'remember_token' => str_random(40),
+      'remember_token' => User::generate_token(),
       'birthday' => '1994-03-13',
-      'remember_token' => str_random(40),
       'valid' => true
     ]);
     $nolan->preferenced_server()->associate($menalt)->save();
@@ -68,8 +67,9 @@ class DatabaseSeeder extends Seeder
       'email' => 'kevin@hotmail.com',
       'password' => Hash::make('secret'),
       'birthday' => '1998-01-05',
-      'remember_token' => str_random(40),
+      'remember_token' => User::generate_token(),
       'valid' => true
+
     ]);
     $kevin->preferenced_server()->associate($jiva)->save();
 
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
       'firstname' => 'Marco',
       'lastname' => 'Visalli',
       'birthday' => '1994-08-08',
-      'remember_token' => str_random(40),
+      'remember_token' => User::generate_token(),
       'valid' => true
     ]);
     $marco->preferenced_server()->associate($mylaise)->save();
@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
       'firstname' => 'Jonathan',
       'lastname' => 'Zaehringer',
       'birthday' => '1994-11-15',
-      'remember_token' => str_random(40),
+      'remember_token' => User::generate_token(),
       'valid' => true
     ]);
     $jo->preferenced_server()->associate($sumens)->save();
@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
       'firstname' => 'Sébastien',
       'lastname' => 'Martin',
       'birthday' => '1992-09-01',
-      'remember_token' => str_random(40),
+      'remember_token' => User::generate_token(),
       'valid' => true
     ]);
     $seb->preferenced_server()->associate($mylaise)->save();
@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
         'firstname' => 'Emmanuel',
         'lastname' => 'Barchichat',
         'birthday' => '1993-04-25',
-        'remember_token' => str_random(40),
+        'remember_token' => User::generate_token(),
         'valid' => true
     ]);
     $manu->preferenced_server()->associate($sumens)->save();

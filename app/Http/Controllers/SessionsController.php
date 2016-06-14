@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use SendMail;
 
 
 class SessionsController extends Controller
@@ -44,9 +45,6 @@ class SessionsController extends Controller
 
             if(Hash::check($password, $user->password)){
                 if($user->valid != true){
-                    $user->remember_token = str_random(40);
-                    $user->save();
-
                     return $this->sendConfirmationMissing($request, $user);
                 }
 
@@ -92,7 +90,7 @@ class SessionsController extends Controller
      */
     protected function sendConfirmationMissing(Request $request, $user)
     {
-        $user->remember_token = str_random(40);
+        $user->remember_token = User::generate_token();
         $user->save();
 
         SendMail::sendConfirmationMail($user);

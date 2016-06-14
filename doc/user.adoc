@@ -49,8 +49,22 @@ include::../app/Http/Controllers/UsersController.php[lines=149..162]
 
 ==== Mail
 
-Pour confirmé la validation, une facade est la pour permettre l'envoie du mail de confirmation.
+Pour confirmé la confirmation, une facade est la pour permettre l'envoie du mail de confirmation, nommé `SendMail`, elle dispose d'une function pour envoyer la confirmation à l'utilisateur.
+
+[source, php, indent=0]
+----
+include::../app/Classes/SendMail.php[lines=26..31]
+----
+
 il est nécessaire de regenerer le token de l'utilisateur avant de l'envoyé par question de sécurité.
+Pour cela, il suffit de regenerer le token via la function disponible dans le model `User`.
+
+[source, php, indent=0]
+----
+include::../app/User.php[lines=21..24]
+----
+
+
 
 ==== Amélioration
 

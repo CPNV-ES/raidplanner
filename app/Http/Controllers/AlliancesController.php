@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Alliance;
 use Illuminate\Support\Facades\Auth;
+use Role;
 
 class AlliancesController extends DomainController
 {
@@ -19,7 +20,9 @@ class AlliancesController extends DomainController
     public function index()
     {
         $alliances = Alliance::all();
-        return view('alliances.index')->with('alliances',$alliances);
+
+        //TO_DO : si il peut créer une alliance, envoyer une variable à true afin de juste vérifier dans la vue si elle est true ou pas
+        return view('alliances.index', ['alliances' => $alliances]);
     }
 
 
@@ -41,15 +44,23 @@ class AlliancesController extends DomainController
      */
     public function store(Request $request)
     {
-        $guild =  Auth::getUser()->guilds()->onServer($this->server())->firstOrFail();
-        $alliance = new Alliance();
-        $alliance->name = $request->name;
-        $alliance->icon_path = $request->icon_path;
-        $alliance->save();
-        $guild->alliance()->associate($alliance);
-        $guild->alliance_role = 'master';
-        $guild->save();
-        return redirect()->route('alliances.index', $request->subdomain);
+        $guild =  Auth::getUser()->guilds()->onServer($this->server())->first();
+        $currentUser = Auth::getUser();
+        $user = ($guild->usersByRole('master')->first());
+
+         //FIX TO: ça marche de cette façon mais ce n'est pas la meilleure. En effet, la façon dont notre base de donnée est conçue, elle autorise plusieurs guild master par guilde alors qu'il ne peut en avoir que un
+        if($user->id == $currentUser->id && $guild->alliance()==null){
+            $alliance = new Alliance();
+            $alliance->name = $request->input('name');
+            $alliance->icon_path = $request->input('icon_path');
+            $alliance->save();
+            $guild->alliance()->associate($alliance);
+            $guild->alliance_role = 'master';
+            $guild->save();
+            return redirect()->route('alliances.show',  [$alliance->id, 'subdomain' => $request->subdomain]);
+        }else{
+            abort('403',"you don't have a guild or your guild already has an alliance");
+        }
     }
     /**
      * Display the specified resource.
@@ -64,9 +75,12 @@ class AlliancesController extends DomainController
     
     public function showMy()
     {
-        //dd(Auth::getUser()->guilds()->onServer($this->server())->get());
-        $alliance = Auth::getUser()->guilds()->onServer($this->server())->firstOrFail()->alliance;
-        return view('alliances.show')->with('alliance', $alliance);
+        $alliance = Auth::getUser()->guilds()->onServer($this->server())->first()->alliance;
+        if ($alliance == null) {
+            return view('alliances.index')->with('alliances',Alliance::all());
+        } else {
+            return view('alliances.show')->with('alliance', $alliance);
+        }
     }
 
     /**
@@ -129,5 +143,11 @@ class AlliancesController extends DomainController
             'name' => 'required|alpha_num|min:3|max:16',
             'icon' => 'required|min:5'
         ]);
+    }
+
+    private function validateAuthenticate($forwhat){
+        if(Role::haveRoleFor('alliances.' . $forwhat, Auth::getUser(), false)) {
+            return true;
+        }
     }
 }

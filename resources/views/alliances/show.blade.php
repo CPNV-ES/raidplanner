@@ -24,14 +24,18 @@
                         <tr>
                             <td>{{ $guild->alliance_role }}</td>
                             <td><img src="{{ $guild->icon_path }}" alt="{{ $guild->name }} logo"></td>
-                            <td>{{ link_to_route('guilds.show', $guild->name, ['subdomain' => $subdomain, $guild->id]) }}</td>
+                            <td>{{ link_to_route('guilds.show', $guild->name, [$guild->id, 'subdomain' => $subdomain])}}</td>
                         </tr>
 
                     @endforeach
-                    {{link_to_route('alliances.edit', 'Éditer l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
-                    {{ Form::open(['method' => 'delete', 'route' => ['alliances.destroy', $subdomain, $alliance]]) }}
-                    {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
-                    {{ Form::close() }}
+
+
+                    <!-- -TO DO: Ajouter les conditions pour afficher les boutons selon l-le paramètre qui sera passé dans le controlleur -->
+                        {{link_to_route('alliances.edit', 'Éditer l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+
+                        {{ Form::open(['method' => 'delete', 'route' => ['alliances.destroy', $subdomain, $alliance]]) }}
+                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
 
                     </tbody>
                 </table>

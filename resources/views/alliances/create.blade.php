@@ -2,27 +2,16 @@
 
 @section('content')
 
-    <h1>Create Alliance</h1>
-
-    {{ Form::open(['route' => ['alliances.store', $subdomain]]) }}
-    <ul>
-
-        <li>
-            {{ Form::label('name', 'Name:') }}
-            {{ Form::text('name') }}
-        </li>
-
-        <li>
-            {{ Form::label('icon', 'Icon:') }}
-            {{ Form::text('icon path') }}
-        </li>
-
-        <li>
-            {{ Form::submit('Submit', array('class' => 'btn')) }}
-        </li>
-    </ul>
-    {{ Form::close() }}
-
+    <div class="col-md-6 col-md-offset-2">
+        <h1>Create Alliance</h1>
+        {{ Form::open(['route' => ['alliances.store', $subdomain]]) }}
+            {{ Form::label('name', 'Name:') }}<br>
+            {{ Form::text('name') }}<br><br>
+            {{ Form::label('icon', 'Icon:') }}<br>
+            {{ Form::text('icon path') }}<br><br>
+            {{ Form::submit('Submit', array('class' => 'btn btn-success')) }}
+        {{ Form::close() }}
+    </div>
 
 @endsection
 
