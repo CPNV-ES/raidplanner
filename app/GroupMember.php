@@ -18,6 +18,9 @@ class GroupMember extends Model
     return $this->belongsTo(User::class);
   }
 
+  public function scopeof($query, $group){
+    return $query->where('group_id', $group->id);
+  }
 }
 
 

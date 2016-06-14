@@ -9,34 +9,57 @@ class Role{
         'groups' => [
             'edit' => ['master'],
             'update' => ['master'],
-            'edit_members' => ['officer', 'master'],
-            'action_member' => ['officer', 'master'],
-            'destroy' => ['master']
+            'destroy' => ['master'],
+            'members' => [
+                'edit' => ['officer', 'master'],
+                'update' => ['officer', 'master'],
+            ],
         ],
         'guilds' => [
             'edit' => ['master'],
             'update' => ['master'],
-            'edit_members' => ['officer', 'master'],
-            'action_member' => ['officer', 'master'],
-            'destroy' => ['master']
+            'destroy' => ['master'],
+            'members' => [
+                'edit' => ['officer', 'master'],
+                'update' => ['officer', 'master'],
+            ],
+            'alliances' => [
+                'quit' => ['master'],
+            ],
+            'quit' => ['member', 'officer'],
         ],
         'alliances' => [
             'edit' => ['master'],
             'update' => ['master'],
-            'edit_members' => ['master'],
-            'action_member' => ['master'],
-            'destroy' => ['master']
+            'destroy' => ['master'],
+            'members' => [
+                'edit' => ['officer', 'master'],
+                'update' => ['officer', 'master'],
+            ],
         ]
     ];
 
     public function haveRoleFor($route, $user, $target){
-        preg_match('/^([a-z]+)\.([a-z\_]+)$/', $route, $matches);
+        preg_match('/^([a-z]+)\.([a-z]+(\.[a-z]+)*)$/', $route, $matches);
         $resource = $matches[1];
         $action = $matches[2];
 
-        if(!array_key_exists($action, $this->roles[$resource])){
-            return true;
+        if($nested = $this->isNestedResource($action)){
+            $subResource = $nested[1];
+            $action = $nested[2];
+
+            if(!array_key_exists($action, $this->roles[$resource][$subResource])) {
+                return true;
+            }
+            $permit = $this->roles[$resource][$subResource][$action];
         }
+        else {
+            if(!array_key_exists($action, $this->roles[$resource])) {
+                return true;
+            }
+            $permit = $this->roles[$resource][$action];
+        }
+
 
         switch($resource) {
             case "groups" :
@@ -57,7 +80,7 @@ class Role{
             return false;
         }
 
-        if(!in_array($role, $this->roles[$resource][$action])){
+        if(!in_array($role, $permit)){
             return false;
         }
 
@@ -88,7 +111,7 @@ class Role{
                 }
 
                 /* User not master of the master guild */
-                return null;
+                return false;
             }
         }
 
@@ -103,5 +126,15 @@ class Role{
         }
 
         return $memberOf->role;
+    }
+
+    private function isNestedResource($subRoute){
+        preg_match('/^([a-z]+)\.([a-z]+)$/', $subRoute, $matches);
+
+        if(empty($matches)){
+            return false;
+        }
+
+        return $matches;
     }
 }

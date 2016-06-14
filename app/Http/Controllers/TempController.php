@@ -127,4 +127,9 @@ class TempController extends DomainController
         dd(false);
     }
 
+    public function quit(Request $request)
+    {
+        dd(false);
+    }
+
 }

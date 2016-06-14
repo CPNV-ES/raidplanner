@@ -18,8 +18,9 @@ class GuildsController extends DomainController
      */
     public function index()
     {
+        $canCreate = $this->canCreate(Auth::getUser());
         $guilds = Guild::onServer($this->server())->get();
-        return view ('guilds.index')->with('guilds', $guilds);
+        return view ('guilds.index', ['guilds' => $guilds, 'canCreate' => $canCreate]);
     }
 
     /**
@@ -29,6 +30,10 @@ class GuildsController extends DomainController
      */
     public function create()
     {
+        if(!$this->canCreate(Auth::getUser())){
+            abort('403', 'You have a guild');
+        }
+
         return view('guilds.create');
     }
 
@@ -40,6 +45,10 @@ class GuildsController extends DomainController
      */
     public function store(Request $request)
     {
+        if(!$this->canCreate(Auth::getUser())){
+            abort('403', 'You have a guild');
+        }
+
         $guild = new Guild();
         $guild->name = $request->input('name');
         $guild->icon_path = $request->input('icon_path');
@@ -57,7 +66,7 @@ class GuildsController extends DomainController
      */
     public function show(Request $request)
     {
-        return view ('guilds.show')->with('guild', Guild::find($request->guilds));
+        return view ('guilds.show', ['guild' => Guild::find($request->guilds), 'user' => Auth::getUser()]);
     }
     /**
      * Display the specified resource.
@@ -71,7 +80,7 @@ class GuildsController extends DomainController
         if($guild == null){
             abort('403', "You don't have guild on " + title_case($this->server()->slug));
         }
-        return view ('guilds.show')->with('guild', $guild);
+        return view ('guilds.show', ['guild' => $guild, 'user' => Auth::getUser()]);
     }
 
 
@@ -113,5 +122,25 @@ class GuildsController extends DomainController
         $guild=Guild::find($request->guilds);
         $guild->delete();
         return redirect()->route('guilds.edit_members', $this->server()->slug);
+    }
+
+    public function quit(Request $request)
+    {
+        $guild = Guild::find($request->guilds);
+        $user = Auth::getUser();
+
+        $user->guild_members()->of($guild)->first()->delete();
+
+        return redirect()->route('guilds.show', [$guild->id, 'subdomain' => $this->server()->slug]);
+    }
+
+    private function canCreate($user){
+        $guild = $user->guilds()->onServer($this->server())->first();
+
+        if($guild == null){
+            return true;
+        }
+
+        return false;
     }
 }

@@ -17,4 +17,8 @@ class GuildMember extends Model
   {
     return $this->belongsTo(User::class);
   }
+
+  public function scopeof($query, $guild){
+    return $query->where('guild_id', $guild->id);
+  }
 }

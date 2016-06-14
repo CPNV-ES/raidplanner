@@ -26,7 +26,7 @@ class RoleMiddleware
     {
         $route = $request->route()->getName();
 
-        preg_match('/^([a-z]+)\.([a-z\_]+)$/', $route, $matches);
+        preg_match('/^([a-z]+)\.([a-z]+(\.[a-z]+)*)$/', $route, $matches);
         $resource = $matches[1];
 
         $object = null;

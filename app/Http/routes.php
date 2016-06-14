@@ -61,18 +61,20 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['middleware' => ['role']], function() {
                 /* Alliance route */
-                Route::get('alliances/{alliances}/edit_members', 'TempController@editMembers')->name('alliances.edit_members');
-                Route::put('alliances/{alliances}/member/{member}', 'TempController@actionMember')->name('alliances.action_member');
+                Route::get('alliances/{alliances}/members/edit', 'TempController@editMembers')->name('alliances.members.edit');
+                Route::put('alliances/{alliances}/members/{guilds}', 'TempController@actionMembers')->name('alliances.members.update');
+                Route::put('alliances/{alliances}/quit', 'TempController@quit')->name('guilds.alliances.quit');
                 Route::resource('alliances', 'AlliancesController');
 
                 /* Guild Route */
-                Route::get('guilds/{guilds}/edit_members', 'TempController@editMembers')->name('guilds.edit_members');
-                Route::put('guilds/{guilds}/member/{member}', 'TempController@actionMember')->name('guilds.action_member');
+                Route::get('guilds/{guilds}/members/edit', 'TempController@editMembers')->name('guilds.members.edit');
+                Route::put('guilds/{guilds}/members/{users}', 'TempController@actionMember')->name('guilds.members.update');
+                Route::put('guilds/{guilds}/quit', 'GuildsController@quit')->name('guilds.quit');
                 Route::resource('guilds', 'GuildsController');
 
                 /* Group Route */
-                Route::get('groups/{groups}/edit_members', 'TempController@editMembers')->name('groups.edit_members');
-                Route::put('groups/{groups}/member/{member}', 'TempController@actionMember')->name('groups.action_member');
+                Route::get('groups/{groups}/members/edit', 'TempController@editMembers')->name('groups.members.edit');
+                Route::put('groups/{groups}/members/{members}', 'TempController@actionMember')->name('groups.members.update');
                 Route::resource('groups', 'TempController');
             });
         });

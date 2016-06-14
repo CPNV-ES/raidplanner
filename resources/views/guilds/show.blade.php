@@ -9,7 +9,34 @@
             <div class="caption">
                 <h3 class="text-center">{{ $guild->name }}</h3>
 
-                @if ($guild->alliance_role === 'master')
+                <p>
+                    @if(Role::haveRoleFor('guilds.quit', $user, $guild))
+                        {{ Form::open(['method' => 'PUT', 'route' => ['guilds.quit', $subdomain, $guild->id]]) }}
+                        {{ Form::submit('Quit guild', ['class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
+                    @endif
+
+                    @if(Role::haveRoleFor('guilds.edit', $user, $guild))
+                        {{link_to_route('guilds.edit', 'Modifier la guilde', ['subdomain' => $subdomain, $guild->id], ['class' => 'btn btn-default'])}}
+                    @endif
+
+                    @if(Role::haveRoleFor('guilds.destroy', $user, $guild))
+                        {{ Form::open(['method' => 'DELETE', 'route' => ['guilds.destroy',$subdomain, $guild->id]]) }}
+                        {{ Form::submit('Delete guild', ['class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
+                    @endif
+                </p>
+
+                @if ($guild->alliance_role == 'master')
+                    @if(Role::haveRoleFor('guilds.alliances.quit', $user, $guild))
+                        @if($guild->alliance_role != 'master')
+                            {{ Form::open(['method' => 'PUT', 'route' => ['guilds.alliances.quit',$subdomain, $guild->alliance->id, $guild->id]]) }}
+                            {{ Form::submit('Quit alliance', ['class' => 'btn btn-danger']) }}
+                            {{ Form::close() }}
+                        @else
+                            <p>You are master of the alliance, you can't quit them</p>
+                        @endif
+                    @endif
                     <img src="http://dofus2.org/images/items/couronne-d-allister.png"
                          alt="{{ $guild->name }} contrôle"/>
                 @endif
