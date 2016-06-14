@@ -99,7 +99,7 @@ class GuildsController extends DomainController
         $guild->name = $request->input('name');
         $guild->icon_path = $request->input('icon_path');
         $guild->save();
-        return redirect('guilds.index', $this->server()->slug);
+        return redirect()->route('guilds.show', [$guild->id, 'subdomain' => $this->server()->slug]);
     }
 
     /**
@@ -112,6 +112,6 @@ class GuildsController extends DomainController
     {
         $guild=Guild::find($request->guilds);
         $guild->delete();
-        return redirect()->route('guilds.index', $this->server()->slug);
+        return redirect()->route('guilds.edit_members', $this->server()->slug);
     }
 }

@@ -35,5 +35,4 @@ class Guild extends Model
     public function scopeonServer($query, $server){
         return $query->where('server_id', $server->id);
     }
-
 }

@@ -47,6 +47,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
+
                     <li><a href="{{ url('/news') }}">News</a></li>
                 </ul>
 

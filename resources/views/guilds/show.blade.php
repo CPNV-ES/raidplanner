@@ -10,7 +10,7 @@
                 <h3 class="text-center">{{ $guild->name }}</h3>
 
                 @if ($guild->alliance_role === 'master')
-                    <img style="width:50px" src="http://dofus2.org/images/items/couronne-d-allister.png"
+                    <img src="http://dofus2.org/images/items/couronne-d-allister.png"
                          alt="{{ $guild->name }} contrôle"/>
                 @endif
 
@@ -19,6 +19,7 @@
                 @else
                     <p>La guilde <b>{{ $guild->name }}</b> n'appartient à aucune alliance</p>
                 @endif
+
                 <table class="table table-hover">
                     <thead>
                     <tr>

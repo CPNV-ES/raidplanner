@@ -4,7 +4,7 @@
 @foreach ($guilds as $guild)
      <div class="col-sm-12 col-md-3">
         <div class="thumbnail">
-            <img src="{{ $guild->icon_path }}" alt="{{ $guild->name }} logo">
+            <img src="{{ $guild->icon_path }}" class="blason_guild" alt="{{ $guild->name }} logo">
 
             <div class="caption">
                 <h3>{{ $guild->name }}</h3>

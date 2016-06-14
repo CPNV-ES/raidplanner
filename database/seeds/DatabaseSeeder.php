@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
       'password' => Hash::make('secret'),
       'birthday' => '1998-01-05',
       'remember_token' => str_random(40),
-      'valid' => false
+      'valid' => true
     ]);
     $kevin->preferenced_server()->associate($jiva)->save();
 
