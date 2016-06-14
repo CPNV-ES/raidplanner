@@ -20,7 +20,9 @@
 
         @endforeach
 
-        {{link_to_route('alliances.create', 'Créer une alliance', ['subdomain' => $subdomain], ['class' => 'btn btn-success'])}}
+        @if($canCreate)
+            {{link_to_route('alliances.create', 'Créer une alliance', ['subdomain' => $subdomain], ['class' => 'btn btn-success'])}}
+        @endif
 
     </div>
 

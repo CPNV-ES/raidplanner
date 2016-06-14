@@ -21,8 +21,19 @@ class AlliancesController extends DomainController
     {
         $alliances = Alliance::all();
 
-        //TO_DO : si il peut créer une alliance, envoyer une variable à true afin de juste vérifier dans la vue si elle est true ou pas
-        return view('alliances.index', ['alliances' => $alliances]);
+        $guild =  Auth::getUser()->guilds()->onServer($this->server())->first();
+        if ($guild!=null) {
+            $currentUser = Auth::getUser();
+            $user = ($guild->usersByRole('master')->first());
+            if ($user->id == $currentUser->id && $guild->alliance() == null) {
+                $canCreate = true;
+            }
+        } else {
+            $canCreate = false;
+        }
+
+        //FIX TO: ça marche de cette façon mais ce n'est pas la meilleure. En effet, la façon dont notre base de donnée est conçue, elle autorise plusieurs guild master par guilde alors qu'il ne peut en avoir que un
+        return view('alliances.index', ['alliances' => $alliances, 'canCreate'=>$canCreate]);
     }
 
 
@@ -70,16 +81,27 @@ class AlliancesController extends DomainController
      */
     public function show(Request $request)
     {
-        return view('alliances.show')->with('alliance', Alliance::find($request->alliances));
+        $canEdit = $this->validateAuthenticate('edit', Alliance::find($request->alliances));
+        $canDelete = $this->validateAuthenticate('destroy', Alliance::find($request->alliances));
+
+        return view('alliances.show', ['alliance' =>Alliance::find($request->alliances), 'canEdit'=>$canEdit, 'canDelete'=>$canDelete]);
     }
     
     public function showMy()
     {
-        $alliance = Auth::getUser()->guilds()->onServer($this->server())->first()->alliance;
-        if ($alliance == null) {
-            return view('alliances.index')->with('alliances',Alliance::all());
+        if (Auth::getUser()->guild==null ){
+            abort('403', "You aren't in a guild");
         } else {
-            return view('alliances.show')->with('alliance', $alliance);
+            $alliance = Auth::getUser()->guilds()->onServer($this->server())->first()->alliance;
+            $canCreate = $this->validateAuthenticate('create', false);
+            $canEdit = $this->validateAuthenticate('edit', $alliance);
+            $canDelete = $this->validateAuthenticate('destroy', $alliance);
+
+            if ($alliance == null) {
+                return view('alliances.index', ['alliances' => Alliance::all(), 'canCreate' => $canCreate]);
+            } else {
+                return view('alliances.show', ['alliance' => $alliance, 'canEdit' => $canEdit, 'canDelete' => $canDelete]);
+            }
         }
     }
 
@@ -145,9 +167,11 @@ class AlliancesController extends DomainController
         ]);
     }
 
-    private function validateAuthenticate($forwhat){
-        if(Role::haveRoleFor('alliances.' . $forwhat, Auth::getUser(), false)) {
+    protected function validateAuthenticate($forwhat, $rightOn) {
+        if(Role::haveRoleFor('alliances.' . $forwhat, Auth::getUser(), $rightOn)) {
             return true;
+        }else{
+            return false;
         }
     }
 }
