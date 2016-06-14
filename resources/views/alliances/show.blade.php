@@ -27,15 +27,19 @@
                             <td>{{ link_to_route('guilds.show', $guild->name, [$guild->id, 'subdomain' => $subdomain])}}</td>
                         </tr>
 
-                    @endforeach
+                        @endforeach
 
 
-                    <!-- -TO DO: Ajouter les conditions pour afficher les boutons selon l-le paramètre qui sera passé dans le controlleur -->
-                        {{link_to_route('alliances.edit', 'Éditer l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+                                <!-- -TO DO: Ajouter les conditions pour afficher les boutons selon le paramètre qui sera passé dans le controlleur -->
+                        @if($canEdit)
+                            {{link_to_route('alliances.edit', 'Éditer l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+                        @endif
 
-                        {{ Form::open(['method' => 'delete', 'route' => ['alliances.destroy', $subdomain, $alliance]]) }}
-                        {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
-                        {{ Form::close() }}
+                        @if($canDelete)
+                            {{ Form::open(['method' => 'delete', 'route' => ['alliances.destroy', $subdomain, $alliance]]) }}
+                            {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+                            {{ Form::close() }}
+                        @endif
 
                     </tbody>
                 </table>
