@@ -7,7 +7,7 @@ use \MaddHatter\LaravelFullcalendar\Event as FullCalendarEvent;
 
 class Event extends Model implements FullCalendarEvent
 {
-  protected $fillable = ['calendar_id', 'author_id', 'name', 'description'];
+  protected $fillable = ['calendar_id', 'author_id', 'name', 'description', 'start', 'end'];
 
   protected $dates = ['start', 'end'];
 
