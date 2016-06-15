@@ -5,7 +5,7 @@
         <h1>Modifier la guilde:</br> {{ $guild->name }}</h1>
         {!! Form::model($guild,['method' => 'PATCH', 'route' => ['guilds.update', $subdomain, $guild->id]]) !!}
         <div class="form-group">
-            {!! Form::label('Name', 'Nom:') !!}
+            {!! Form::label('Name', 'Name:') !!}
             {!! Form::text('name',null,['class'=>'form-control']) !!}
         </div>
         <div class="form-group">

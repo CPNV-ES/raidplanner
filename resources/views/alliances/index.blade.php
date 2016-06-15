@@ -13,7 +13,7 @@
                     <div class="caption">
                         <h3>{{ $alliance->name }}</h3>
 
-                        {{link_to_route('alliances.show', 'Voir l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+                        {{link_to_route('alliances.show', 'See the alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         @endforeach
 
         @if($canCreate)
-            {{link_to_route('alliances.create', 'Créer une alliance', ['subdomain' => $subdomain], ['class' => 'btn btn-success'])}}
+            {{link_to_route('alliances.create', 'Create a new alliance', ['subdomain' => $subdomain], ['class' => 'btn btn-success'])}}
         @endif
 
     </div>

@@ -19,21 +19,20 @@ class AlliancesController extends DomainController
      */
     public function index()
     {
+        $canCreate = false;
         $alliances = Alliance::all();
+        $guild = Auth::getUser()->guilds()->onServer($this->server())->first();
 
-        $guild =  Auth::getUser()->guilds()->onServer($this->server())->first();
-        if ($guild!=null) {
+        if ($guild != null) {
             $currentUser = Auth::getUser();
             $user = ($guild->usersByRole('master')->first());
             if ($user->id == $currentUser->id && $guild->alliance() == null) {
                 $canCreate = true;
             }
-        } else {
-            $canCreate = false;
         }
 
         //FIX TO: ça marche de cette façon mais ce n'est pas la meilleure. En effet, la façon dont notre base de donnée est conçue, elle autorise plusieurs guild master par guilde alors qu'il ne peut en avoir que un
-        return view('alliances.index', ['alliances' => $alliances, 'canCreate'=>$canCreate]);
+        return view('alliances.index', ['alliances' => $alliances, 'canCreate' => $canCreate]);
     }
 
 
@@ -50,17 +49,17 @@ class AlliancesController extends DomainController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $guild =  Auth::getUser()->guilds()->onServer($this->server())->first();
+        $guild = Auth::getUser()->guilds()->onServer($this->server())->first();
         $currentUser = Auth::getUser();
         $user = ($guild->usersByRole('master')->first());
 
-         //FIX TO: ça marche de cette façon mais ce n'est pas la meilleure. En effet, la façon dont notre base de donnée est conçue, elle autorise plusieurs guild master par guilde alors qu'il ne peut en avoir que un
-        if($user->id == $currentUser->id && $guild->alliance()==null){
+        //FIX TO: ça marche de cette façon mais ce n'est pas la meilleure. En effet, la façon dont notre base de donnée est conçue, elle autorise plusieurs guild master par guilde alors qu'il ne peut en avoir que un
+        if ($user->id == $currentUser->id && $guild->alliance() == null) {
             $alliance = new Alliance();
             $alliance->name = $request->input('name');
             $alliance->icon_path = $request->input('icon_path');
@@ -68,39 +67,45 @@ class AlliancesController extends DomainController
             $guild->alliance()->associate($alliance);
             $guild->alliance_role = 'master';
             $guild->save();
-            return redirect()->route('alliances.show',  [$alliance->id, 'subdomain' => $request->subdomain]);
-        }else{
-            abort('403',"you don't have a guild or your guild already has an alliance");
+            return redirect()->route('alliances.show', [$alliance->id, 'subdomain' => $request->subdomain]);
+        } else {
+            abort('403', "you don't have a guild or your guild already has an alliance");
         }
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
     {
-        $canEdit = $this->validateAuthenticate('edit', Alliance::find($request->alliances));
-        $canDelete = $this->validateAuthenticate('destroy', Alliance::find($request->alliances));
+        $alliance = Alliance::find($request->alliances);
+        $canEdit = $this->validateAuthenticate('edit',$alliance );
+        $canDelete = $this->validateAuthenticate('destroy', $alliance);
+        $canQuit = $this->validateAuthenticate('quit', $alliance);
+        $canEditMembers = $this->validateAuthenticate('members.edit', $alliance);
 
-        return view('alliances.show', ['alliance' =>Alliance::find($request->alliances), 'canEdit'=>$canEdit, 'canDelete'=>$canDelete]);
+        return view('alliances.show', ['alliance' => Alliance::find($request->alliances), 'canEdit' => $canEdit, 'canDelete' => $canDelete, 'canQuit' => $canQuit, 'canEditMembers' => $canEditMembers]);
     }
-    
+
     public function showMy()
     {
-        if (Auth::getUser()->guild==null ){
+        if (Auth::getUser()->guild == null) {
             abort('403', "You aren't in a guild");
         } else {
             $alliance = Auth::getUser()->guilds()->onServer($this->server())->first()->alliance;
             $canCreate = $this->validateAuthenticate('create', false);
             $canEdit = $this->validateAuthenticate('edit', $alliance);
             $canDelete = $this->validateAuthenticate('destroy', $alliance);
+            $canQuit = $this->validateAuthenticate('quit', $alliance);
+            $canEditMembers = $this->validateAuthenticate('members.edit', $alliance);
 
             if ($alliance == null) {
                 return view('alliances.index', ['alliances' => Alliance::all(), 'canCreate' => $canCreate]);
             } else {
-                return view('alliances.show', ['alliance' => $alliance, 'canEdit' => $canEdit, 'canDelete' => $canDelete]);
+                return view('alliances.show', ['alliance' => $alliance, 'canEdit' => $canEdit, 'canDelete' => $canDelete, 'canQuit' => $canQuit, 'canEditMembers' => $canEditMembers]);
             }
         }
     }
@@ -108,34 +113,35 @@ class AlliancesController extends DomainController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request)
     {
         $alliance = Alliance::find($request->alliances);
-        $guilds = $alliance->guilds;
-        return view('alliances.edit',compact('alliance','guilds'));
+        $guilds = Guild::where('alliance_id = NULL')->get();
+        return view('alliances.edit', compact('alliance', 'guilds'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         $alliance = Alliance::find($request->alliances);
 
-        if (!empty($request->input('name'))){
+        if (!empty($request->input('name'))) {
             $alliance->name = $request->input('name');
         }
 
-        if (!empty($request->input('icon_path'))){
+        if (!empty($request->input('icon_path'))) {
             $alliance->icon_path = $request->input('icon_path');
         }
+
         $alliance->save();
         return redirect()->route('alliances.show', [$alliance->id, 'subdomain' => $request->subdomain]);
     }
@@ -143,7 +149,7 @@ class AlliancesController extends DomainController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
@@ -156,7 +162,7 @@ class AlliancesController extends DomainController
     /**
      * Validate the user register request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return void
      */
     protected function validateCreateAlliances(Request $request)
@@ -167,11 +173,26 @@ class AlliancesController extends DomainController
         ]);
     }
 
-    protected function validateAuthenticate($forwhat, $rightOn) {
-        if(Role::haveRoleFor('alliances.' . $forwhat, Auth::getUser(), $rightOn)) {
+    protected function validateAuthenticate($forwhat, $rightOn)
+    {
+        if (Role::haveRoleFor('alliances.' . $forwhat, Auth::getUser(), $rightOn)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
+
+    public function quit(Request $request)
+    {
+        $alliance = Alliance::find($request->alliances);
+        $guild = Auth::getUser()->guilds()->onServer($this->server())->first();
+        if ($guild->alliance_role != 'master') {
+            $guild->alliance_id = null;
+            $guild->alliance_role = null;
+        } else {
+            abort('403', 'You are the master of the alliance, you can\'t leave the alliance');
+        }
+        return redirect()->route('alliance.show', [$alliance->id, 'subdomain' => $this->server()->slug]);
+    }
+
 }

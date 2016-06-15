@@ -27,19 +27,28 @@
                             <td>{{ link_to_route('guilds.show', $guild->name, [$guild->id, 'subdomain' => $subdomain])}}</td>
                         </tr>
 
-                        @endforeach
+                    @endforeach
 
+                    @if($canEditMembers)
+                        {{link_to_route('alliances.members.edit', 'Éditer les membres de l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+                    @endif
 
-                                <!-- -TO DO: Ajouter les conditions pour afficher les boutons selon le paramètre qui sera passé dans le controlleur -->
-                        @if($canEdit)
-                            {{link_to_route('alliances.edit', 'Éditer l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
-                        @endif
+                    @if($canEdit)
+                        {{link_to_route('alliances.edit', 'Éditer l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+                    @endif
 
-                        @if($canDelete)
-                            {{ Form::open(['method' => 'delete', 'route' => ['alliances.destroy', $subdomain, $alliance]]) }}
-                            {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
-                            {{ Form::close() }}
-                        @endif
+                    @if($canDelete)
+                        {{ Form::open(['method' => 'delete', 'route' => ['alliances.destroy', $subdomain, $alliance]]) }}
+                        {{ Form::submit('Supprimer l\'alliance', ['class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
+                    @endif
+
+                    @if($canQuit)
+                        {{ Form::open(['method' => 'PUT', 'route' => ['alliances.quit', $subdomain, $alliance->id]]) }}
+                        {{ Form::submit('Quitter l\'alliance', ['class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
+                    @endif
+
 
                     </tbody>
                 </table>

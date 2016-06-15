@@ -61,9 +61,11 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['middleware' => ['role']], function() {
                 /* Alliance route */
-                Route::get('alliances/{alliances}/members/edit', 'TempController@editMembers')->name('alliances.members.edit');
+                Route::get('alliances/{alliances}/members/edit', 'AlliancesMembersController@index')->name('alliances.members.edit');
+                Route::put('alliances/{alliances}/members/add', 'AlliancesMembersController@add')->name('alliances.members.add');
+                Route::put('alliances/{alliances}/members/kick', 'AlliancesMembersController@kick')->name('alliances.members.kick');
                 Route::put('alliances/{alliances}/members/{guilds}', 'TempController@actionMembers')->name('alliances.members.update');
-                Route::put('alliances/{alliances}/quit', 'TempController@quit')->name('guilds.alliances.quit');
+                Route::put('alliances/{alliances}/quit', 'AlliancesController@quit')->name('alliances.quit');
                 Route::resource('alliances', 'AlliancesController');
 
                 /* Guild Route */

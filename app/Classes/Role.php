@@ -35,6 +35,8 @@ class Role{
             'destroy' => ['master'],
             'members' => [
                 'edit' => ['officer', 'master'],
+                'add' => ['officer', 'master'],
+                'kick' => ['officer', 'master'],
                 'update' => ['officer', 'master'],
             ],
         ]
