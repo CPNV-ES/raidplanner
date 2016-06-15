@@ -18,12 +18,17 @@ class Event extends Model implements FullCalendarEvent
 
   public function author()
   {
-    return $this->belongsTo(User::class, 'author_id');
+    return $this->belongsTo(User::class);
   }
 
   public function subscribes()
   {
     return $this->hasMany(Subscribe::class);
+  }
+
+  public function subscribers()
+  {
+    return $this->belongsToMany(User::class, 'subscribes');
   }
 
   public function getId()
@@ -51,3 +56,5 @@ class Event extends Model implements FullCalendarEvent
     return $this->end;
   }
 }
+
+// TODO: revoir les relations
