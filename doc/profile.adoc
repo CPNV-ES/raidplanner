@@ -8,7 +8,7 @@ Voici la liste concernant les routes utilisant ce `controller`
 
 [source, php, indent=0]
 ----
-include::../app/Http/routes.php[lines=79..85]
+include::../app/Http/routes.php[lines=82..88]
 ----
 
 === Profile
@@ -18,5 +18,5 @@ Ce controller permet de visionner les profiles d'autres utilisateurs.
 === Personnage
 
 Cette partie n'a malheureusement pas été implémenté.
-La gestion de profile devrait normalement affichier les personnages créent sur le serveur actuelle.
-Et son ajout devrait être possible depuis le profile.
+La gestion de profile devrait normalement affichier les personnages présent sur le serveur actuelle.
+Et son ajout devrait être possible depuis le profile via le controller des caractères `archetype`.

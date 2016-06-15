@@ -6,6 +6,11 @@ Cette partie décrit la mise en place du projet.
 
 Pour le fonctionne des `subdomain` il est nécessaire de redirigé toutes les requestes ayant la structure : {server}.raidplanner.dev.
 Mais aussi de reécrire les requests 'www.raidplanner.dev' en 'raidplanner.dev'.
+Cette fonctionnalité est implémenté dans le `.htaccess` de Laravel :
+
+----
+include::../public/.htaccess[lines=7..10]
+----
 
 === Mail
 
@@ -16,3 +21,31 @@ Pour configurer l'envoie, il faut mettre c'est ligne dans le fichier `.env`
 ----
 include::../.env[lines=17..23]
 ----
+
+=== Configuration de Apache
+
+Le serveur Web, dans notre cas Apache doit rediriger tous les requestes venant sur `*.raidplanner.dev` sur le dossier `public` de Laravel.
+Pour ce faire voici un exemple de configuration avec comme chemin vers Laravel `/var/www/raidplanner/public`.
+
+[source, apache]
+----
+<VirtualHost *:80>
+
+    ServerName raidplanner.dev
+    ServerAlias *.raidplanner.dev
+
+    DocumentRoot /var/www/raidplanner/public
+    <Directory /var/www/raidplanner/public/>
+        options FollowSymLinks
+        AllowOverride all
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+----
+
+Cette configuration est très basique, l'important vient de la permission `AllowOverride` pour permettre la réécriture d'url présent dans le `.htaccess`.
+Mais aussi du `ServerAlias` qui défini la redirection de tous les `subdomains` possible sur le serveur Laravel.

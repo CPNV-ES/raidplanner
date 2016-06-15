@@ -27,10 +27,16 @@ Voici le tableau de role nécessaire selon la ressource et l'action demandé.
 
 [source,php,indent=0]
 ----
-include::../app/Classes/Role.php[lines=8..31]
+include::../app/Classes/Role.php[lines=9..41]
 ----
 
 Si la ressource demandé n'existe pas dans le tableau, la facade retourne une erreur.
+
+==== NestedResource
+
+Les `nestedResource` sont definie par une imbrication de tableau dans la definition des roles.
+Pour ce faire, `Role` utilise la facade `RouteParser` qui verifie le la présence d'une `nestedResource`.
+Si celà est le cas, le fonctionnement pour la récuperation des roles permit et légèrement modifié.
 
 
 === MiddlewareRole

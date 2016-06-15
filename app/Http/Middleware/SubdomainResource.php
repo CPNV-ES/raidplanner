@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Guild;
 use App\Alliance;
+use RouteParser;
 
 class SubdomainResource
 {
@@ -17,9 +18,7 @@ class SubdomainResource
      */
     public function handle($request, Closure $next)
     {
-        preg_match('/^([a-z]+)\.([a-z]+(\.[a-z]+)*)$/', $request->route()->getName(), $matches);
-
-
+        $matches = RouteParser::parse($request->route()->getName());
 
         switch($matches[1]){
             case 'alliances' :

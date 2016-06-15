@@ -3,6 +3,7 @@
 namespace App\Classes;
 
 use Mockery\CountValidator\Exception;
+use RouteParser;
 
 class Role{
     private $roles = [
@@ -40,11 +41,12 @@ class Role{
     ];
 
     public function haveRoleFor($route, $user, $target){
-        preg_match('/^([a-z]+)\.([a-z]+(\.[a-z]+)*)$/', $route, $matches);
+        $matches = RouteParser::parse($route);
         $resource = $matches[1];
         $action = $matches[2];
 
-        if($nested = $this->isNestedResource($action)){
+        if(RouteParser::isNestedResource($action)){
+            $nested = RouteParser::getNestedResource($action);
             $subResource = $nested[1];
             $action = $nested[2];
 
@@ -126,15 +128,5 @@ class Role{
         }
 
         return $memberOf->role;
-    }
-
-    private function isNestedResource($subRoute){
-        preg_match('/^([a-z]+)\.([a-z]+)$/', $subRoute, $matches);
-
-        if(empty($matches)){
-            return false;
-        }
-
-        return $matches;
     }
 }
