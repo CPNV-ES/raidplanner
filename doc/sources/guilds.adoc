@@ -52,7 +52,7 @@ Nous testons le rôle de l'utilisateur (master ou officier) et si il possède d�
 
 [source, php, indent=0]
 ----
-include::../../resources/views/guilds/show.blade.php [lines=13..27]
+include::../../resources/views/guilds/show.blade.php[lines=13..27]
 ----
 
 Affiche ou cache le bouton permettant de retirer la guilde de l'alliance où elle se trouve.
@@ -60,7 +60,7 @@ Si la guilde est master de l'alliance et qu'elle souhaite se retirer elle ne pou
 
 [source, php, indent=0]
 ----
-include::../../resources/views/guilds/show.blade.php [lines=30..42]
+include::../../resources/views/guilds/show.blade.php[lines=30..42]
 ----
 
 === Améliorations
