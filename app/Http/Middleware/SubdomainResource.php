@@ -10,7 +10,7 @@ use RouteParser;
 class SubdomainResource
 {
     /**
-     * Handle an incoming request.
+     * Verify if the resource wanted exist and is present on the server
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -30,7 +30,6 @@ class SubdomainResource
                 }
                 break;
             case 'guilds' :
-
                 if(!isset($request->guilds)){
                     break;
                 }
@@ -38,6 +37,9 @@ class SubdomainResource
                     dd(Guild::findOrFail($request->guilds)->server->slug);
                     abort(403, "Resource does not exist " + title_case($request->subdomain));
                 }
+                break;
+            case 'group' :
+                // Not implemented
                 break;
         }
         return $next($request);

@@ -28,6 +28,6 @@ class SendMail{
     public function sendConfirmationMail($user){
         $args = ['username' => $user->username, 'url' => $this->url . $this->validate . $user->id . '/' . $user->remember_token];
 
-        $this->sendMail($this->validate_view, "Confirme your Mail address !", $args, $user->email);
+        $this->sendMail($this->validate_view, "Confirme your Mail address", $args, $user->email);
     }
 }

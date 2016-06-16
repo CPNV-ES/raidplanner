@@ -58,6 +58,7 @@ class Role{
         $resource = $matches[1];
         $action = $matches[2];
 
+        //Test if the route is a nested resource
         if(Parser::isNestedResource($action)){
             $nested = Parser::getNestedResource($action);
             $subResource = $nested[1];
@@ -76,6 +77,7 @@ class Role{
         }
 
 
+        //Get Role of the user depending the resource.
         switch($resource) {
             case "groups" :
                 $role = $this->getGroupRole($user, $target);
@@ -112,6 +114,7 @@ class Role{
         return $memberOf->role;
     }
 
+    //Get the guild master and check if the user is the master of them
     private function getAllianceRole($user, $alliance){
         $guilds = $alliance->guilds;
 
