@@ -3,7 +3,7 @@
 namespace App\Classes;
 
 use Mockery\CountValidator\Exception;
-use RouteParser;
+use RouteParser as Parser;
 
 class Role{
     private $roles = [
@@ -13,8 +13,13 @@ class Role{
             'destroy' => ['master'],
             'members' => [
                 'edit' => ['officer', 'master'],
+                'add' => ['officer', 'master'],
+                'kick' => ['officer', 'master'],
                 'update' => ['officer', 'master'],
+                'ban' => ['officer', 'master'],
+                'unban' => ['master'],
             ],
+            'quit' => ['member', 'officer'],
         ],
         'guilds' => [
             'edit' => ['master'],
@@ -22,7 +27,11 @@ class Role{
             'destroy' => ['master'],
             'members' => [
                 'edit' => ['officer', 'master'],
+                'add' => ['officer', 'master'],
+                'kick' => ['officer', 'master'],
                 'update' => ['officer', 'master'],
+                'ban' => ['officer', 'master'],
+                'unban' => ['master'],
             ],
             'alliances' => [
                 'quit' => ['master'],
@@ -38,17 +47,19 @@ class Role{
                 'add' => ['officer', 'master'],
                 'kick' => ['officer', 'master'],
                 'update' => ['officer', 'master'],
+                'ban' => ['officer', 'master'],
+                'unban' => ['master'],
             ],
         ]
     ];
 
     public function haveRoleFor($route, $user, $target){
-        $matches = RouteParser::parse($route);
+        $matches = Parser::parse($route);
         $resource = $matches[1];
         $action = $matches[2];
 
-        if(RouteParser::isNestedResource($action)){
-            $nested = RouteParser::getNestedResource($action);
+        if(Parser::isNestedResource($action)){
+            $nested = Parser::getNestedResource($action);
             $subResource = $nested[1];
             $action = $nested[2];
 
