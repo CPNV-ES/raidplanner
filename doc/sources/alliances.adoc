@@ -46,6 +46,8 @@ Lors de la création d'une alliance, nous effectuons un "associate($alliance)" d
             $guild->alliance()->associate($alliance);
 ----
 
+=== Implementation manquante
+
 Une implémentation qui nous reste à faire est une fonction de validation complète pour chaque champs que l'utilisateur sera susceptible de compléter. Le code suivant existe dans le controlleur mais n'a pas encore été implémenté.
 
 [source, php]
@@ -66,4 +68,4 @@ Une implémentation qui nous reste à faire est une fonction de validation compl
 Se contrôleur permet de faire du CRUD au niveau de la gestion des membres d'une alliance. Toutes les views relatives à ces contrôles sont uniquement accessible aux masters d'alliance.
 Ainsi, pour éditer les membres d'une alliance, il faut se rendre dans la page show de l'alliance et cliquer sur le bouton "éditer les membres".
 
-Il est possible, sur cette page, d'ajouter des  guildes qui ne sont pas encore dans une alliance à l'alliance. Il est également possible de kiker des guildes de l'alliance.
+Il est possible, sur cette page, d'ajouter des  guildes qui ne sont pas encore dans une alliance à l'alliance. Il est également possible de kicker des guildes de l'alliance.
