@@ -64,13 +64,15 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('alliances/{alliances}/members/edit', 'AlliancesMembersController@index')->name('alliances.members.edit');
         Route::put('alliances/{alliances}/members/add', 'AlliancesMembersController@add')->name('alliances.members.add');
         Route::put('alliances/{alliances}/members/kick', 'AlliancesMembersController@kick')->name('alliances.members.kick');
-        Route::put('alliances/{alliances}/members/{guilds}', 'TempController@actionMembers')->name('alliances.members.update');
+        Route::put('alliances/{alliances}/members/{guilds}', 'TempController@update')->name('alliances.members.update');
         Route::put('alliances/{alliances}/quit', 'AlliancesController@quit')->name('alliances.quit');
         Route::resource('alliances', 'AlliancesController');
 
         /* Guild Route */
         Route::get('guilds/{guilds}/members/edit', 'TempController@editMembers')->name('guilds.members.edit');
-        Route::put('guilds/{guilds}/members/{users}', 'TempController@actionMember')->name('guilds.members.update');
+        Route::put('guilds/{guilds}/members/add', 'TempController@add')->name('guilds.members.add');
+        Route::put('guilds/{guilds}/members/kick', 'TempController@kick')->name('guilds.members.kick');
+        Route::put('guilds/{guilds}/members/{users}', 'TempController@update')->name('guilds.members.update');
         Route::put('guilds/{guilds}/quit', 'GuildsController@quit')->name('guilds.quit');
         Route::resource('guilds', 'GuildsController');
 
