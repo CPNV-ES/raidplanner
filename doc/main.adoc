@@ -22,7 +22,11 @@ include::./sources/user.adoc[]
 
 include::./sources/profile.adoc[]
 
+include::./sources/guilds.adoc[]
+
 include::./sources/alliances.adoc[]
+
+include::./sources/calendar.adoc[]
 
 include::./sources/production.adoc[]
 

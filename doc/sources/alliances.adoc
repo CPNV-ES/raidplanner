@@ -1,12 +1,12 @@
-= Alliances
+== Alliances
 
 Concernant les alliances, nous avons - pour l'instant -, créé 5 vues. Quatre sont consacrées au CRUD et la dernière est consacrée à la gestion des membres qui appartient à son propre contrôleur.
 
 En réalisant le contrôleur des alliances (CRUD) et des divers spécificités de ce dernier, nous nous sommes rendus compte que la structure de la base de données complexifiait le code. En effet, nous aurions dû, par exemple, intégré un champ guild_master avec un lien vers l'utilisateur étant le maître de la guilde dans la table guilde et un champ alliance_master qui fait un lien vers la guilde maître de l'alliance.
 
-== Spécificités de AlliancesController:
+=== Spécificités de AlliancesController:
 
-=== Résumé
+==== Résumé
 
 Se contrôleur permet de faire du CRUD au niveau des alliances mais pas de gérer la gestion des membres des alliances. Il est appelé dans les vues:
 
@@ -15,7 +15,7 @@ Se contrôleur permet de faire du CRUD au niveau des alliances mais pas de gére
   *- edit: qui permet d'éditer une guilde (juste son nom et son logo, les membres étant gérés par une autre vue et un autre contrôleur)
   *- create: qui permet de créer une guilde (sous certaines conditions de l'utilisateur). Cette vue ne permet pas d'ajouter des membres à l'alliance en cours de création.
 
-=== Quelques spécificités techniques:
+==== Quelques spécificités techniques:
 
 Dans ce contrôleur, récupérer la guilde de l'utilisateur est d'un immense intérêt. Pour se faire nous avions procédé de la façon suivante:
 
@@ -40,7 +40,7 @@ Lors de la création d'une alliance, nous effectuons un "associate($alliance)" d
 include::../../app/Http/Controllers/AlliancesController.php[lines=67]
 ----
 
-=== Implementation manquante
+==== Implementation manquante
 
 Une implémentation qui nous reste à faire est une fonction de validation complète pour chaque champs que l'utilisateur sera susceptible de compléter. Le code suivant existe dans le controlleur mais n'a pas encore été implémenté.
 
@@ -49,9 +49,9 @@ Une implémentation qui nous reste à faire est une fonction de validation compl
 include::../../app/Http/Controllers/AlliancesController.php[lines=169..175]
 ----
 
-== Spécificités de AlliancesMembersController:
+=== Spécificités de AlliancesMembersController:
 
-=== Résumé
+==== Résumé
 
 Se contrôleur permet de faire du CRUD au niveau de la gestion des membres d'une alliance. Toutes les views relatives à ces contrôles sont uniquement accessible aux masters d'alliance.
 Ainsi, pour éditer les membres d'une alliance, il faut se rendre dans la page show de l'alliance et cliquer sur le bouton "éditer les membres".

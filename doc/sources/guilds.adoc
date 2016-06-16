@@ -39,11 +39,11 @@ Cette fonction est réutilisée pour les fonctions `Index`, `Create` et `Store`
 include::../../app/Http/Controllers/GuildsController.php[lines=137..145]
 ----
 
-== Vue Guilds
+=== Vue Guilds
 
 Cette partie décrit les spécifités de certaines vues
 
-=== show.blade.php
+==== show.blade.php
 
 Affichage des détails de la guilde.
 
@@ -63,7 +63,7 @@ Si la guilde est master de l'alliance et qu'elle souhaite se retirer elle ne pou
 include::../../resources/views/guilds/show.blade.php [lines=30..42]
 ----
 
-== Améliorations
+=== Améliorations
 
 L'implémentation de la gestion des membres n'a pas pu être faite.
 Cette partie est un controller indépendant du controller des `guildes` mais intéragie avec les membres de celle-ci.
