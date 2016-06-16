@@ -9,7 +9,7 @@ Mais aussi de reécrire les requests 'www.raidplanner.dev' en 'raidplanner.dev'.
 Cette fonctionnalité est implémenté dans le `.htaccess` de Laravel :
 
 ----
-include::../public/.htaccess[lines=7..10]
+include::../../public/.htaccess[lines=7..10]
 ----
 
 === Mail
@@ -19,7 +19,12 @@ Pour ce faire nous avons un compte `Gmail` pour tester l'envoie de mail.
 Pour configurer l'envoie, il faut mettre c'est ligne dans le fichier `.env`
 
 ----
-include::../.env[lines=17..23]
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=planner.raid@gmail.com
+MAIL_PASSWORD=AsDfGh123456
+MAIL_ENCRYPTION=tls
 ----
 
 === Configuration de Apache
@@ -49,3 +54,8 @@ Pour ce faire voici un exemple de configuration avec comme chemin vers Laravel `
 
 Cette configuration est très basique, l'important vient de la permission `AllowOverride` pour permettre la réécriture d'url présent dans le `.htaccess`.
 Mais aussi du `ServerAlias` qui défini la redirection de tous les `subdomains` possible sur le serveur Laravel.
+
+=== Installation de laravel
+
+Pour l'installation de Laravel, il vous faut impérativement `composer`.
+Vous pouvez vous referez à la documentation de `Composer` pour son installation : link:https://getcomposer.org/[Official website of Composer].

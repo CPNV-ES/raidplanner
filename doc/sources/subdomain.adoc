@@ -15,7 +15,7 @@ Cette valeur permet l'écriture de tout les liens sur la page.
 
 [php]
 ----
-include::../app/Http/Controllers/DomainController.php[lines=18]
+include::../../app/Http/Controllers/DomainController.php[lines=18]
 ----
 
 Le controlleur met aussi à disposition le slug du server demandé et son model via la function `server`.
@@ -23,7 +23,7 @@ Le model est cherché dans la base de donnée uniquement si le controller le dem
 
 [php]
 ----
-include::../app/Http/Controllers/DomainController.php[lines=21..26]
+include::../../app/Http/Controllers/DomainController.php[lines=21..26]
 ----
 
 === SubdomainResource

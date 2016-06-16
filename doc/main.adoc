@@ -1,16 +1,26 @@
-include::./intro.adoc[]
+= Raidplanner
+Jonathan Zaehringer <jonathan.zaehringer@cpnv.ch>, Nolan Rigo <nolan.rigo@cpnv.ch>, Sebastien Martin <sebastien.martin@cpnv.ch>, Marco Visalli <marco.visalli@cpnv.ch>
+v0.1, 22.05.2016
+:toc:
+:imagesdir: assets/images
+:rootdir: ../../
+:homepage: http:://github.com/CPNV-ES/raidplanner
 
-include::./database.adoc[]
+Documentation technique sur `raidplanner`.
 
-include::./route.adoc[]
+include::./sources/intro.adoc[]
 
-include::./subdomain.adoc[]
+include::./sources/database.adoc[]
 
-include::./role.adoc[]
+include::./sources/route.adoc[]
 
-include::./user.adoc[]
+include::./sources/subdomain.adoc[]
 
-include::./profile.adoc[]
+include::./sources/role.adoc[]
 
-include::./production.adoc[]
+include::./sources/user.adoc[]
+
+include::./sources/profile.adoc[]
+
+include::./sources/production.adoc[]
 

@@ -27,7 +27,7 @@ Voici le tableau de role nécessaire selon la ressource et l'action demandé.
 
 [source,php,indent=0]
 ----
-include::../app/Classes/Role.php[lines=9..54]
+include::../../app/Classes/Role.php[lines=9..54]
 ----
 
 Si la ressource demandé n'existe pas dans le tableau, la facade retourne une erreur.

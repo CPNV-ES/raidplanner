@@ -8,13 +8,15 @@ Voici la liste concernant les routes utilisant ce `controller`
 
 [source, php, indent=0]
 ----
-include::../app/Http/routes.php[lines=35..37]
-
-    [...]
-include::../app/Http/routes.php[lines=44..47]
-
-    [...]
-include::../app/Http/routes.php[lines=87..93]
+include::../../app/Http/routes.php[lines=35..37]
+----
+[source, php, indent=0]
+----
+include::../../app/Http/routes.php[lines=44..47]
+----
+[source, php, indent=0]
+----
+include::../../app/Http/routes.php[lines=87..93]
 ----
 
 
@@ -28,7 +30,7 @@ Le formulaire reçu pour l'édition du profile est vérifé par `validator` une 
 Il est nécessaire :
 [source, php, indent=0]
 ----
-include::../app/Http/Controllers/UsersController.php[lines=132..148]
+include::../../app/Http/Controllers/UsersController.php[lines=132..148]
 ----
 
 
@@ -44,7 +46,7 @@ Le formulaire reçu est vérifé par `validator` une solution présente dans Lar
 Il est nécessaire :
 [source, php, indent=0]
 ----
-include::../app/Http/Controllers/UsersController.php[lines=149..162]
+include::../../app/Http/Controllers/UsersController.php[lines=149..162]
 ----
 
 ==== Mail
@@ -53,7 +55,7 @@ Pour confirmé la confirmation, une facade est la pour permettre l'envoie du mai
 
 [source, php, indent=0]
 ----
-include::../app/Classes/SendMail.php[lines=27..32]
+include::../../app/Classes/SendMail.php[lines=27..32]
 ----
 
 il est nécessaire de regenerer le token de l'utilisateur avant de l'envoyé par question de sécurité.
@@ -61,7 +63,7 @@ Pour cela, il suffit de regenerer le token via la function disponible dans le mo
 
 [source, php, indent=0]
 ----
-include::../app/User.php[lines=21..24]
+include::../../app/User.php[lines=21..24]
 ----
 
 
