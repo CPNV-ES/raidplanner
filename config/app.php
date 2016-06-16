@@ -160,6 +160,7 @@ return [
     App\Providers\RoleProvider::class,
     App\Providers\SendMailProvider::class,
     MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+    App\Providers\RouteParserProvider::class,
   ],
 
   /*
@@ -209,6 +210,7 @@ return [
     'Html' => Collective\Html\HtmlFacade::class,
     'Role' => App\Classes\Facades\Role::class,
     'SendMail' => App\Classes\Facades\SendMail::class,
+    'RouteParser' => App\Classes\Facades\RouteParser::class,
     'FullCalendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
   ],
 

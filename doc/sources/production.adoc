@@ -1,0 +1,90 @@
+== Mise en production
+
+Cette partie décrit la mise en place du projet.
+
+=== Nom de domaine
+
+Pour le fonctionne des `subdomain` il est nécessaire de redirigé toutes les requestes ayant la structure : {server}.raidplanner.dev.
+Mais aussi de reécrire les requests 'www.raidplanner.dev' en 'raidplanner.dev'.
+Cette fonctionnalité est implémenté dans le `.htaccess` de Laravel :
+
+----
+include::../../public/.htaccess[lines=7..10]
+----
+
+=== Mail
+
+Pour l'envoie de Mail, il est nécessaire de configuré la boite mail d'envoie.
+Pour ce faire nous avons un compte `Gmail` pour tester l'envoie de mail.
+Pour configurer l'envoie, il faut mettre c'est ligne dans le fichier `.env`
+
+----
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=planner.raid@gmail.com
+MAIL_PASSWORD=AsDfGh123456
+MAIL_ENCRYPTION=tls
+----
+
+=== Configuration de Apache
+
+Le serveur Web, dans notre cas Apache doit rediriger tous les requestes venant sur `*.raidplanner.dev` sur le dossier `public` de Laravel.
+Pour ce faire voici un exemple de configuration avec comme chemin vers Laravel `/var/www/raidplanner/public`.
+
+[source, apache]
+----
+<VirtualHost *:80>
+
+    ServerName raidplanner.dev
+    ServerAlias *.raidplanner.dev
+
+    DocumentRoot /var/www/raidplanner/public
+    <Directory /var/www/raidplanner/public/>
+        options FollowSymLinks
+        AllowOverride all
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+----
+
+Cette configuration est très basique, l'important vient de la permission `AllowOverride` pour permettre la réécriture d'url présent dans le `.htaccess`.
+Mais aussi du `ServerAlias` qui défini la redirection de tous les `subdomains` possible sur le serveur Laravel.
+
+=== Installation de laravel
+
+Pour l'installation de Laravel, il vous faut impérativement `composer`.
+Vous pouvez vous referez à la documentation de `Composer` pour son installation : link:https://getcomposer.org/[Official website of Composer].
+Pour la procédure d'installation suivez ces étapes :
+
+[source, bash]
+----
+$ git clone https://github.com/CPNV-ES/raidplanner.git
+$ cd raidplanner
+$ composer install
+$ composer update
+$ cp .env.example .env
+$ vim .env # configurez le .env avec les informations nécessaires par rapport à la base de donnée et au email
+$ ./artisan key:generate
+--
+$ ./artisan migrate --seed #Si vous voulez les valeurs de test, executez les lignes suivantes UNIQUEMENT
+--
+$ ./artisan migrate
+$ ./artisan db:seed --class=TestDataSeeder
+----
+
+[IMPORTANT]
+====
+n'oubliez pas qu'il est nécessaire d'avoir mis `composer` dans le `PATH` de votre système
+====
+
+Si vous avez besoin de recharger les donnés a un état stable :
+----
+$ ./artisan migrate:refresh --seed
+--
+$ ./artisan migrate:refresh --seeder=TestDataSeeder
+----

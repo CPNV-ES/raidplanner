@@ -10,6 +10,7 @@ use Closure;
 use Auth;
 use Mockery\CountValidator\Exception;
 use Role;
+use RouteParser;
 
 
 class RoleMiddleware
@@ -26,7 +27,7 @@ class RoleMiddleware
     {
         $route = $request->route()->getName();
 
-        preg_match('/^([a-z]+)\.([a-z]+(\.[a-z]+)*)$/', $route, $matches);
+        $matches = RouteParser::parse($route);
         $resource = $matches[1];
 
         $object = null;

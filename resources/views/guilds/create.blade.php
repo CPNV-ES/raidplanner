@@ -7,7 +7,7 @@
         {!! Form::open(['route' => ['guilds.store', $subdomain]]) !!}
 
         <div class="form-group">
-            {!! Form::label('name', 'Nom:') !!}
+            {!! Form::label('name', 'Name:') !!}
             {!! Form::text('name',null,['class'=>'form-control']) !!}
         </div>
         <div class="form-group">

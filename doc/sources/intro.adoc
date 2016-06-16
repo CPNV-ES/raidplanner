@@ -1,12 +1,3 @@
-= Raidplanner
-Jonathan Zaehringer <jonathan.zaehringer@cpnv.ch>, Nolan Rigo <nolan.rigo@cpnv.ch>, Sebastien Martin <sebastien.martin@cpnv.ch>, Marco Visalli <marco.visalli@cpnv.ch>
-v0.1, 22.05.2016
-:toc:
-:imagesdir: assets/images
-:homepage: http:://github.com/CPNV-ES/raidplanner
-
-Documentation technique sur `raidplanner`.
-
 == Concept
 
 Raidplanner est un système de planification d'évenement via un calandier.
