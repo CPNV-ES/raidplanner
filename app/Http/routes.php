@@ -25,73 +25,80 @@
 
 Route::group(['middleware' => 'web'], function () {
 
-    /* Route for public site */
-    Route::group(['domain' => 'raidplanner.dev'], function(){
-        Route::get('/', 'PublicController@welcome')->name('public.welcome');
+  /* Route for public site */
+  Route::group(['domain' => 'raidplanner.dev'], function () {
+    Route::get('/', 'PublicController@welcome')->name('public.welcome');
 
-        Route::group(['middleware' => ['auth']], function () {
-            Route::get('server_list', 'PublicController@server_list')->name('public.server_list');
-        });
-
-        /* Validation of user */
-        Route::get('validate/{id}/{remember_token}', 'UsersController@validateRegisterToken');
+    Route::group(['middleware' => ['auth']], function () {
+      Route::get('server_list', 'PublicController@server_list')->name('public.server_list');
     });
 
-    /* Login / Logout route */
-    Route::get('login', 'SessionsController@create')->name("login");
-    Route::post('login', 'SessionsController@store');
-    Route::get('logout', 'SessionsController@destroy')->name("logout");;
+    /* Validation of user */
+    Route::get('validate/{id}/{remember_token}', 'UsersController@validateRegisterToken');
+  });
 
-    /* Register route */
-    Route::get('register', 'UsersController@create')->name("register");;
-    Route::post('register', 'UsersController@store');
+  /* Login / Logout route */
+  Route::get('login', 'SessionsController@create')->name("login");
+  Route::post('login', 'SessionsController@store');
+  Route::get('logout', 'SessionsController@destroy')->name("logout");;
 
-    Route::group(['domain' => '{subdomain}.raidplanner.dev', 'middleware' => ['auth']], function (){
+  /* Register route */
+  Route::get('register', 'UsersController@create')->name("register");;
+  Route::post('register', 'UsersController@store');
 
-        /* base route for app site */
-        Route::get('/', 'HomeController@welcome')->name('app.welcome');
+  Route::group(['domain' => '{subdomain}.raidplanner.dev', 'middleware' => ['auth']], function () {
 
-        Route::get('/news', 'HomeController@news')->name('app.news');
+    /* base route for app site */
+    Route::get('/', 'HomeController@welcome')->name('app.welcome');
 
-        Route::group(['middleware' => ['subdomain.resource']], function(){
-            /* Short link */
-            Route::get('my/alliance', 'AlliancesController@showMy')->name('show.my.alliance');
-            Route::get('my/guild', 'GuildsController@showMy')->name('show.my.guild');
-            Route::get('my/group', 'TempController@showMy')->name('show.my.group');
+    Route::get('/news', 'HomeController@news')->name('app.news');
 
-            Route::group(['middleware' => ['role']], function() {
-                /* Alliance route */
-                Route::get('alliances/{alliances}/members/edit', 'TempController@editMembers')->name('alliances.members.edit');
-                Route::put('alliances/{alliances}/members/{guilds}', 'TempController@actionMembers')->name('alliances.members.update');
-                Route::put('alliances/{alliances}/quit', 'TempController@quit')->name('guilds.alliances.quit');
-                Route::resource('alliances', 'AlliancesController');
+    Route::group(['middleware' => ['subdomain.resource']], function () {
+      /* Short link */
+      Route::get('my/alliance', 'AlliancesController@showMy')->name('show.my.alliance');
+      Route::get('my/guild', 'GuildsController@showMy')->name('show.my.guild');
+      Route::get('my/group', 'TempController@showMy')->name('show.my.group');
 
-                /* Guild Route */
-                Route::get('guilds/{guilds}/members/edit', 'TempController@editMembers')->name('guilds.members.edit');
-                Route::put('guilds/{guilds}/members/{users}', 'TempController@actionMember')->name('guilds.members.update');
-                Route::put('guilds/{guilds}/quit', 'GuildsController@quit')->name('guilds.quit');
-                Route::resource('guilds', 'GuildsController');
+      Route::group(['middleware' => ['role']], function () {
+        /* Alliance route */
+        Route::get('alliances/{alliances}/members/edit', 'TempController@editMembers')->name('alliances.members.edit');
+        Route::put('alliances/{alliances}/members/{guilds}', 'TempController@actionMembers')->name('alliances.members.update');
+        Route::put('alliances/{alliances}/quit', 'TempController@quit')->name('guilds.alliances.quit');
+        Route::resource('alliances', 'AlliancesController');
 
-                /* Group Route */
-                Route::get('groups/{groups}/members/edit', 'TempController@editMembers')->name('groups.members.edit');
-                Route::put('groups/{groups}/members/{members}', 'TempController@actionMember')->name('groups.members.update');
-                Route::resource('groups', 'TempController');
-            });
-        });
+        /* Guild Route */
+        Route::get('guilds/{guilds}/members/edit', 'TempController@editMembers')->name('guilds.members.edit');
+        Route::put('guilds/{guilds}/members/{users}', 'TempController@actionMember')->name('guilds.members.update');
+        Route::put('guilds/{guilds}/quit', 'GuildsController@quit')->name('guilds.quit');
+        Route::get('guilds/{guilds}/calendars','GuildsController@calendars')->name('guilds.calendars');
+        Route::resource('guilds', 'GuildsController');
 
-        /* Show all user having a guild on server */
+        /* Group Route */
+        Route::get('groups/{groups}/members/edit', 'TempController@editMembers')->name('groups.members.edit');
+        Route::put('groups/{groups}/members/{members}', 'TempController@actionMember')->name('groups.members.update');
+        Route::resource('groups', 'TempController');
+
+        /* Calendars Route */
+        Route::resource('calendars','CalendarsController');
+        /* Events Route */
+        Route::post('events/{events}/subscribe','EventsController@subscribe'  )->name('events.subscribe');
+        Route::resource('events','EventsController');
+    });
+});
+
+/* Show all user having a guild on server */
         Route::get('users', 'ProfilesController@index')->name('users.profiles.index');
         /* Route for showing profile of users */
-        Route::group(['prefix' => 'users/{user}'], function() {
-            Route::get('/', 'ProfilesController@show');
-            Route::get('/profile', 'ProfilesController@show')->name('user.profiles.show');
+        Route::group(['prefix' => 'users/{user}'], function () {
+          Route::get('/', 'ProfilesController@show');
+          Route::get('/profile', 'ProfilesController@show')->name('user.profiles.show');
         });
 
         /* Show and edit the personal profile */
-        Route::group(['prefix' => 'profile'], function() {
-            Route::get('', 'UsersController@show')->name('profile.show');
-            Route::get('edit', 'UsersController@edit')->name('profile.edit');
-            Route::put('edit', ['before' => 'csrf', 'uses' => 'UsersController@update']);
+        Route::group(['prefix' => 'profile'], function () {
+          Route::get('', 'UsersController@show')->name('profile.show');
+          Route::get('edit', 'UsersController@edit')->name('profile.edit');
+          Route::put('edit', ['before' => 'csrf', 'uses' => 'UsersController@update']);
         });
+      });
     });
-});

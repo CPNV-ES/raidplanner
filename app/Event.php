@@ -3,9 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use \MaddHatter\LaravelFullcalendar\Event as FullCalendarEvent;
 
-class Event extends Model implements FullCalendarEvent
+class Event extends Model implements \MaddHatter\LaravelFullcalendar\Event
 {
   protected $fillable = ['calendar_id', 'author_id', 'name', 'description', 'start', 'end'];
 
@@ -28,7 +27,7 @@ class Event extends Model implements FullCalendarEvent
 
   public function subscribers()
   {
-    return $this->belongsToMany(User::class, 'subscribes');
+    return $this->belongsToMany(User::class, 'subscribes','event_id','subscriber_id');
   }
 
   public function getId()
@@ -56,5 +55,3 @@ class Event extends Model implements FullCalendarEvent
     return $this->end;
   }
 }
-
-// TODO: revoir les relations
