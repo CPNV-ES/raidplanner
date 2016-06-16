@@ -3,3 +3,66 @@
 Concernant les alliances, nous avons - pour l'instant -, créé 5 vues. Quatre sont consacrées au CRUD et la dernière est consacrée à la gestion des membres qui appartient à son propre contrôleur.
 
 En réalisant le contrôleur des alliances (CRUD) et des divers spécificités de ce dernier, nous nous sommes rendus compte que la structure de la base de données complexifiait le code. En effet, nous aurions dû, par exemple, intégré un champ guild_master avec un lien vers l'utilisateur étant le maître de la guilde dans la table guilde et un champ alliance_master qui fait un lien vers la guilde maître de l'alliance.
+
+== Spécificités de AlliancesController:
+
+=== Résumé
+
+Se contrôleur permet de faire du CRUD au niveau des alliances mais pas de gérer la gestion des membres des alliances. Il est appelé dans les vues:
+  - index: qui liste toutes les alliances et affiche un bouton qui envoie sur la page de création d'alliance si l'utilisateur rempli les conditions.
+  - show: qui est affichée soit depuis le menu dans l'onglet "show my alliance" soit en cliquant sur "show alliance" dans le descriptif d'une guilde de la vue index.
+  - edit: qui permet d'éditer une guilde (juste son nom et son logo, les membres étant gérés par une autre vue et un autre contrôleur)
+  - create: qui permet de créer une guilde (sous certaines conditions de l'utilisateur). Cette vue ne permet pas d'ajouter des membres à l'alliance en cours de création.
+
+=== Quelques spécificités techniques:
+
+Dans ce contrôleur, récupérer la guilde de l'utilisateur est d'un immense intérêt. Pour se faire nous avions procédé de la façon suivante:
+
+[source,php]
+----
+$guild = Auth::getUser()->guilds()->onServer($this->server())->first();
+----
+
+Nous utilisons le scope onServer() du contrôleur guilds avec comme paramètre le serveur actuel et récupérons la première instance de guilde trouvée (l'utilisateur est aussi censé en avoir que une par serveur).
+
+Dans le code suivant (de la fonction index), nous cherchons à savoir si l'utilisateur peut créer une alliance ou pas. Pour ce faire, nous testons - dans un premier lieu -, si l'utilisateur est dans une guilde. Si non, alors il ne pourra pas créer de guilde ($canCreate = false de base). Si oui, nous testons si l'utilisateurs est le meneur de la guilde ET si la guilde dans laquelle il est n'est pas déjà dans une alliance. Si une des 2 conditions n'est pas respectée, alors il ne pourra pas créer d'alliance.
+
+[source, php]
+----
+if ($guild != null) {
+            $currentUser = Auth::getUser();
+            $user = ($guild->usersByRole('master')->first());
+            if ($user->id == $currentUser->id && $guild->alliance() == null) {
+                $canCreate = true;
+            }
+        }
+----
+
+Lors de la création d'une alliance, nous effectuons un "associate($alliance)" de l'alliance sur la fonction alliance() du contrôleur guild liant la guilde créatrice à l'alliance.
+
+[source, php]
+----
+            $guild->alliance()->associate($alliance);
+----
+
+Une implémentation qui nous reste à faire est une fonction de validation complète pour chaque champs que l'utilisateur sera susceptible de compléter. Le code suivant existe dans le controlleur mais n'a pas encore été implémenté.
+
+[source, php]
+----
+    protected function validateCreateAlliances(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|alpha_num|min:3|max:16',
+            'icon' => 'required|min:5'
+        ]);
+    }
+----
+
+== Spécificités de AlliancesMembersController:
+
+=== Résumé
+
+Se contrôleur permet de faire du CRUD au niveau de la gestion des membres d'une alliance. Toutes les views relatives à ces contrôles sont uniquement accessible aux masters d'alliance.
+Ainsi, pour éditer les membres d'une alliance, il faut se rendre dans la page show de l'alliance et cliquer sur le bouton "éditer les membres".
+
+Il est possible, sur cette page, d'ajouter des  guildes qui ne sont pas encore dans une alliance à l'alliance. Il est également possible de kiker des guildes de l'alliance.
