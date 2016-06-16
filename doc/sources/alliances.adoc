@@ -19,44 +19,32 @@ Se contrôleur permet de faire du CRUD au niveau des alliances mais pas de gére
 
 Dans ce contrôleur, récupérer la guilde de l'utilisateur est d'un immense intérêt. Pour se faire nous avions procédé de la façon suivante:
 
-[source,php]
+[source, php, indent=0]
 ----
-$guild = Auth::getUser()->guilds()->onServer($this->server())->first();
+include::../../app/Http/Controllers/AlliancesController.php[lines=24]
 ----
 
 Nous utilisons le scope onServer() du contrôleur guilds avec comme paramètre le serveur actuel et récupérons la première instance de guilde trouvée (l'utilisateur est aussi censé en avoir que une par serveur).
 
 Dans le code suivant (de la fonction index), nous cherchons à savoir si l'utilisateur peut créer une alliance ou pas. Pour ce faire, nous testons - dans un premier lieu -, si l'utilisateur est dans une guilde. Si non, alors il ne pourra pas créer de guilde ($canCreate = false de base). Si oui, nous testons si l'utilisateurs est le meneur de la guilde ET si la guilde dans laquelle il est n'est pas déjà dans une alliance. Si une des 2 conditions n'est pas respectée, alors il ne pourra pas créer d'alliance.
 
-[source, php]
+[source, php, indent=0]
 ----
-if ($guild != null) {
-            $currentUser = Auth::getUser();
-            $user = ($guild->usersByRole('master')->first());
-            if ($user->id == $currentUser->id && $guild->alliance() == null) {
-                $canCreate = true;
-            }
-        }
+include::../../app/Http/Controllers/AlliancesController.php[lines=26..32]
 ----
 
 Lors de la création d'une alliance, nous effectuons un "associate($alliance)" de l'alliance sur la fonction alliance() du contrôleur guild liant la guilde créatrice à l'alliance.
 
-[source, php]
+[source, php, indent=0]
 ----
-            $guild->alliance()->associate($alliance);
+include::../../app/Http/Controllers/AlliancesController.php[lines=67]
 ----
 
 Une implémentation qui nous reste à faire est une fonction de validation complète pour chaque champs que l'utilisateur sera susceptible de compléter. Le code suivant existe dans le controlleur mais n'a pas encore été implémenté.
 
-[source, php]
+[source, php, indent=0]
 ----
-    protected function validateCreateAlliances(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|alpha_num|min:3|max:16',
-            'icon' => 'required|min:5'
-        ]);
-    }
+include::../../app/Http/Controllers/AlliancesController.php[lines=169..175]
 ----
 
 == Spécificités de AlliancesMembersController:
