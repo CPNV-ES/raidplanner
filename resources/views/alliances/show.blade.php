@@ -12,9 +12,9 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Rôle</th>
-                        <th>Blason</th>
-                        <th>Nom</th>
+                        <th>Role</th>
+                        <th>Icon</th>
+                        <th>Name</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,23 +30,23 @@
                     @endforeach
 
                     @if($canEditMembers)
-                        {{link_to_route('alliances.members.edit', 'Éditer les membres de l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+                        {{link_to_route('alliances.members.edit', 'Edit members of the alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
                     @endif
 
                     @if($canEdit)
-                        {{link_to_route('alliances.edit', 'Éditer l\'alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
+                        {{link_to_route('alliances.edit', 'Edit the alliance', [$alliance->id, 'subdomain' => $subdomain], ['class' => 'btn btn-default'])}}
                     @endif
 
                     @if($canDelete)
                         {{ Form::open(['method' => 'delete', 'route' => ['alliances.destroy', $subdomain, $alliance]]) }}
-                        {{ Form::submit('Supprimer l\'alliance', ['class' => 'btn btn-danger']) }}
+                        {{ Form::submit('Delete the alliance', ['class' => 'btn btn-danger']) }}
                         {{ Form::close() }}
                     @endif
 
                     @if($canQuit)
-                        {{ Form::open(['method' => 'PUT', 'route' => ['alliances.quit', $subdomain, $alliance->id]]) }}
-                        {{ Form::submit('Quitter l\'alliance', ['class' => 'btn btn-danger']) }}
-                        {{ Form::close() }}
+                            {{ Form::open(['method' => 'PUT', 'route' => ['alliances.quit', $subdomain, $alliance->id]]) }}
+                            {{ Form::submit('Quit the alliance', ['class' => 'btn btn-danger']) }}
+                            {{ Form::close() }}
                     @endif
 
 

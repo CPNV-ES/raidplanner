@@ -33,9 +33,6 @@ class Role{
                 'ban' => ['officer', 'master'],
                 'unban' => ['master'],
             ],
-            'alliances' => [
-                'quit' => ['master'],
-            ],
             'quit' => ['member', 'officer'],
         ],
         'alliances' => [
@@ -50,6 +47,7 @@ class Role{
                 'ban' => ['officer', 'master'],
                 'unban' => ['master'],
             ],
+            'quit' => ['member', 'officer'],
         ]
     ];
 

@@ -92,22 +92,24 @@ class AlliancesController extends DomainController
 
     public function showMy()
     {
-        if (Auth::getUser()->guild == null) {
+        $guild = Auth::getUser()->guilds()->onServer($this->server())->first();
+        if ( $guild == null) {
             abort('403', "You aren't in a guild");
-        } else {
-            $alliance = Auth::getUser()->guilds()->onServer($this->server())->first()->alliance;
-            $canCreate = $this->validateAuthenticate('create', false);
-            $canEdit = $this->validateAuthenticate('edit', $alliance);
-            $canDelete = $this->validateAuthenticate('destroy', $alliance);
-            $canQuit = $this->validateAuthenticate('quit', $alliance);
-            $canEditMembers = $this->validateAuthenticate('members.edit', $alliance);
-
-            if ($alliance == null) {
-                return view('alliances.index', ['alliances' => Alliance::all(), 'canCreate' => $canCreate]);
-            } else {
-                return view('alliances.show', ['alliance' => $alliance, 'canEdit' => $canEdit, 'canDelete' => $canDelete, 'canQuit' => $canQuit, 'canEditMembers' => $canEditMembers]);
-            }
         }
+
+        $canCreate = $this->validateAuthenticate('create', false);
+
+        $alliance = $guild->alliance;
+        if ($alliance == null) {
+            return view('alliances.index', ['alliances' => Alliance::all(), 'canCreate' => $canCreate]);
+        }
+
+        $canEdit = $this->validateAuthenticate('edit', $alliance);
+        $canDelete = $this->validateAuthenticate('destroy', $alliance);
+        $canQuit = $this->validateAuthenticate('quit', $alliance);
+        $canEditMembers = $this->validateAuthenticate('members.edit', $alliance);
+
+        return view('alliances.show', ['alliance' => $alliance, 'canEdit' => $canEdit, 'canDelete' => $canDelete, 'canQuit' => $canQuit, 'canEditMembers' => $canEditMembers]);
     }
 
     /**
