@@ -119,8 +119,7 @@ class AlliancesController extends DomainController
     public function edit(Request $request)
     {
         $alliance = Alliance::find($request->alliances);
-        $guilds = Guild::where('alliance_id = NULL')->get();
-        return view('alliances.edit', compact('alliance', 'guilds'));
+        return view('alliances.edit',['alliance' => $alliance]);
     }
 
     /**
