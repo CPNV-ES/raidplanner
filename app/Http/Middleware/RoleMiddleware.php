@@ -17,7 +17,8 @@ class RoleMiddleware
 {
 
     /**
-     * Handle an incoming request.
+     * The middleware get the resource wanted and get with the facade Role
+     * if the user have the good role.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
