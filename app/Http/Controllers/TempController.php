@@ -132,4 +132,12 @@ class TempController extends DomainController
         dd(false);
     }
 
+    public function kick(){
+        dd(false);
+    }
+
+    public function add(){
+        dd(false);
+    }
+
 }
