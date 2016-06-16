@@ -16,7 +16,7 @@ include::../../app/Http/routes.php[lines=44..47]
 ----
 [source, php, indent=0]
 ----
-include::../../app/Http/routes.php[lines=95..100]
+include::../../app/Http/routes.php[lines=97..102]
 ----
 
 
