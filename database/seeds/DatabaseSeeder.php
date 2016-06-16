@@ -114,14 +114,14 @@ class DatabaseSeeder extends Seeder
 
     // User Seb
     $manu = User::create([
-        'username' => 'Barchich',
-        'email' => 'emmanuel.barchichat@cpnv.ch',
-        'password' => Hash::make('secret'),
-        'firstname' => 'Emmanuel',
-        'lastname' => 'Barchichat',
-        'birthday' => '1993-04-25',
-        'remember_token' => User::generate_token(),
-        'valid' => true
+      'username' => 'Barchich',
+      'email' => 'emmanuel.barchichat@cpnv.ch',
+      'password' => Hash::make('secret'),
+      'firstname' => 'Emmanuel',
+      'lastname' => 'Barchichat',
+      'birthday' => '1993-04-25',
+      'remember_token' => User::generate_token(),
+      'valid' => true
     ]);
     $manu->preferenced_server()->associate($sumens)->save();
 
@@ -163,12 +163,32 @@ class DatabaseSeeder extends Seeder
       'name' => 'Overflew'
     ]);
     $obsidian = Group::create([
-        'name' => 'Obsidiant'
+      'name' => 'Obsidiant'
     ]);
 
     $jo->group_members()->create(['group_id' => $overflew->id, 'role' => 'member']);
 
+    // Calendars
+    $calendar = [
+      'alliancesolo' => $alliancesolo->calendars()->create(['name' => 'Calendrier des Solitaires']),
+      'lepeedophil' => $lepeedophil->calendars()->create(['name' => 'Calendrier des épées fortes']),
+      'chevalierdemeraude' => $chevalierdemeraude->calendars()->create(['name' => 'Protégons les Émeries']),
+      'overflew' => $overflew->calendars()->create(['name' => 'ToA en guilde, chaque samedi']),
+      'obsidian' => $obsidian->calendars()->create(['name' => 'Roster McM 50 joueurs, adhésion libre']),
+    ];
 
+    $calendar['alliancesolo']->events()->create([
+      'name' => 'Raid : Gardien de la Vallée',
+      'description' => 'Allez on se tombe gardien de la vallée, on vous donne la compo en vocal',
+      'start' => new DateTime('now'),
+      'end' => (new DateTime('now'))->modify('+2 hours')
+    ]);
+    $calendar['alliancesolo']->events()->create([
+      'name' => 'Event de guilde en Alliance',
+      'description' => 'Event de guilde, PvE / PvP et WvW si des gens sont motivés',
+      'start' => (new DateTime('now'))->modify('-1 day +3 hours'),
+      'end' => (new DateTime('now'))->modify('-1 day +6 hours +30 minutes')
+    ]);
 
     $this->command->info('Seed was done successfully');
   }

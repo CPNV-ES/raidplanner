@@ -12,4 +12,9 @@ class Group extends Model
   {
     return $this->hasMany(GroupMember::class);
   }
+
+  public function calendars()
+  {
+    return $this->morphMany(Calendar::class, 'of');
+  }
 }
