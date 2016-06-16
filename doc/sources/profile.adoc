@@ -8,7 +8,7 @@ Voici la liste concernant les routes utilisant ce `controller`
 
 [source, php, indent=0]
 ----
-include::../app/Http/routes.php[lines=82..88]
+include::../../app/Http/routes.php[lines=87..93]
 ----
 
 === Profile

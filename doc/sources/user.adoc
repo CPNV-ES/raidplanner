@@ -16,7 +16,7 @@ include::../../app/Http/routes.php[lines=44..47]
 ----
 [source, php, indent=0]
 ----
-include::../../app/Http/routes.php[lines=87..93]
+include::../../app/Http/routes.php[lines=95..100]
 ----
 
 
@@ -30,7 +30,7 @@ Le formulaire reçu pour l'édition du profile est vérifé par `validator` une 
 Il est nécessaire :
 [source, php, indent=0]
 ----
-include::../../app/Http/Controllers/UsersController.php[lines=132..148]
+include::../../app/Http/Controllers/UsersController.php[lines=144..155]
 ----
 
 
@@ -46,7 +46,7 @@ Le formulaire reçu est vérifé par `validator` une solution présente dans Lar
 Il est nécessaire :
 [source, php, indent=0]
 ----
-include::../../app/Http/Controllers/UsersController.php[lines=149..162]
+include::../../app/Http/Controllers/UsersController.php[lines=163..169]
 ----
 
 ==== Mail

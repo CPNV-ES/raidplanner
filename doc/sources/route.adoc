@@ -4,7 +4,7 @@ Cette partie décrit le fonctionnement des routes présents dans `raidplanner`
 
 [source, php]
 ----
-include::../app/Http/routes.php[lines=25..97]
+include::../../app/Http/routes.php[lines=25..102]
 ----
 
 === Découpage du site

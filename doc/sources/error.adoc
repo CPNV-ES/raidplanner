@@ -1,0 +1,19 @@
+== Gestion des Erreurs
+
+Pour un affichage plus propre des erreurs de type 403.
+Il a été nécessaire de modifier le Handler de Laravel qui gère les erreurs.
+
+Voici le code nécessaire a cette redirection des erreurs connus sur leur vue respective.
+
+[source, php]
+----
+include::../../app/Exceptions/Handler.php[lines=46..57]
+----
+
+=== Vue
+
+pour la gestion des vues il suffit de crée, dans le dossier `errors`,
+des copies des fichiers présent et de les nommés selon le code erreur voulu.
+exemple ('403.blade.php', '501.blade.php')
+
+Si vous voulez les personnalisés basez vous sur le `layouts.errors`.
