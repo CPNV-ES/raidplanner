@@ -9,10 +9,11 @@ En réalisant le contrôleur des alliances (CRUD) et des divers spécificités d
 === Résumé
 
 Se contrôleur permet de faire du CRUD au niveau des alliances mais pas de gérer la gestion des membres des alliances. Il est appelé dans les vues:
-  - index: qui liste toutes les alliances et affiche un bouton qui envoie sur la page de création d'alliance si l'utilisateur rempli les conditions.
-  - show: qui est affichée soit depuis le menu dans l'onglet "show my alliance" soit en cliquant sur "show alliance" dans le descriptif d'une guilde de la vue index.
-  - edit: qui permet d'éditer une guilde (juste son nom et son logo, les membres étant gérés par une autre vue et un autre contrôleur)
-  - create: qui permet de créer une guilde (sous certaines conditions de l'utilisateur). Cette vue ne permet pas d'ajouter des membres à l'alliance en cours de création.
+
+  *- index: qui liste toutes les alliances et affiche un bouton qui envoie sur la page de création d'alliance si l'utilisateur rempli les conditions.
+  *- show: qui est affichée soit depuis le menu dans l'onglet "show my alliance" soit en cliquant sur "show alliance" dans le descriptif d'une guilde de la vue index.
+  *- edit: qui permet d'éditer une guilde (juste son nom et son logo, les membres étant gérés par une autre vue et un autre contrôleur)
+  *- create: qui permet de créer une guilde (sous certaines conditions de l'utilisateur). Cette vue ne permet pas d'ajouter des membres à l'alliance en cours de création.
 
 === Quelques spécificités techniques:
 
