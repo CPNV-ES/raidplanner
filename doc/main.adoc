@@ -24,3 +24,5 @@ include::./sources/profile.adoc[]
 
 include::./sources/production.adoc[]
 
+include::./sources/alliances.adoc[]
+

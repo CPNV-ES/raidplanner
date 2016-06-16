@@ -1,0 +1,5 @@
+= Alliances
+
+Concernant les alliances, nous avons - pour l'instant -, créé 5 vues. Quatre sont consacrées au CRUD et la dernière est consacrée à la gestion des membres qui appartient à son propre contrôleur.
+
+En réalisant le contrôleur des alliances (CRUD) et des divers spécificités de ce dernier, nous nous sommes rendus compte que la structure de la base de données complexifiait le code. En effet, nous aurions dû, par exemple, intégré un champ guild_master avec un lien vers l'utilisateur étant le maître de la guilde dans la table guilde et un champ alliance_master qui fait un lien vers la guilde maître de l'alliance.
