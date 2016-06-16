@@ -59,3 +59,32 @@ Mais aussi du `ServerAlias` qui défini la redirection de tous les `subdomains` 
 
 Pour l'installation de Laravel, il vous faut impérativement `composer`.
 Vous pouvez vous referez à la documentation de `Composer` pour son installation : link:https://getcomposer.org/[Official website of Composer].
+Pour la procédure d'installation suivez ces étapes :
+
+[source, bash]
+----
+$ git clone https://github.com/CPNV-ES/raidplanner.git
+$ cd raidplanner
+$ composer install
+$ composer update
+$ cp .env.example .env
+$ vim .env # configurez le .env avec les informations nécessaires par rapport à la base de donnée et au email
+$ ./artisan key:generate
+--
+$ ./artisan migrate --seed #Si vous voulez les valeurs de test, executez les lignes suivantes UNIQUEMENT
+--
+$ ./artisan migrate
+$ ./artisan db:seed --class=TestDataSeeder
+----
+
+[IMPORTANT]
+====
+n'oubliez pas qu'il est nécessaire d'avoir mis `composer` dans le `PATH` de votre système
+====
+
+Si vous avez besoin de recharger les donnés a un état stable :
+----
+$ ./artisan migrate:refresh --seed
+--
+$ ./artisan migrate:refresh --seeder=TestDataSeeder
+----
