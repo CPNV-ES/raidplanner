@@ -1,0 +1,54 @@
+== Calendrier
+
+=== fullcalendar.io
+
+Pour la gestion de nos calendriers nous utilisons http://fullcalendar.io[fullcalendar.io],
+c'est un plugin jQuery qui permet d'avoir un calendrier interactif du côté front-end.
+
+=== Helper fullcalendar pour laravel
+
+Afin d'interfacer nos calendriers/events avec le plugins jQuery,
+nous utilisions le helper https://github.com/maddhatter/laravel-fullcalendar[laravel-fullcalendar] de https://github.com/maddhatter[maddhatter]
+
+=== Event
+
+Le helper fournit une interface que l'on peut implémenter sur le model Eloquent de notre choix.
+comme cela, nous pouvons utiliser directement nos objets métiers dans notre calendrier.
+
+=== Implementation dans le model Event
+
+Tout d'abords, nous implémentons l'interface
+
+[source, php, indent=0]
+----
+include::../../app/Event.php[lines=7]
+----
+
+Ensuite, nous implémentons les méthodes
+
+[source, php, indent=0]
+----
+include::../../app/Event.php[lines=33..57]
+----
+
+=== Utilisation dans le controller
+
+Voici un exemple d'utilisation dans le controller,
+lors de l'affichage d'un calendrier, nous récupérons ses events
+et nous les passons directement au helper
+
+[source, php, indent=0]
+----
+include::../../app/Http/Controllers/CalendarsController.php[lines=13..18]
+----
+
+=== Utilisation dans la vue
+
+Fullcalendar a besoin de quelques librairies pour fonctionner,
+pour cela une vue a été créée
+et peut être étendue par toutes les vues qui doivent afficher un calendrier.
+
+[source, php, indent=0]
+----
+@include('calendars.layout')
+----
