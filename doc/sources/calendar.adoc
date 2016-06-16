@@ -7,8 +7,8 @@ c'est un plugin jQuery qui permet d'avoir un calendrier interactif du côté fro
 
 === Helper fullcalendar pour laravel
 
-Afin d'interfacer nos calendriers/events avec le plugins jQuery,
-nous utilisions le helper https://github.com/maddhatter/laravel-fullcalendar[laravel-fullcalendar] de https://github.com/maddhatter[maddhatter]
+Afin d'interfacer nos calendriers/events avec le plugin,
+nous utilisons le helper https://github.com/maddhatter/laravel-fullcalendar[laravel-fullcalendar] de https://github.com/maddhatter[maddhatter]
 
 === Event
 
