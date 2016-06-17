@@ -3,7 +3,7 @@
 <head>
   @yield('title')
 
-  <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 
   <style>
     html, body {
@@ -30,7 +30,8 @@
       text-align: center;
       display: inline-block;
       color: #000000;
-      font-size: 17px;
+      font-weight: 200;
+      font-size: 25px;
     }
 
     .title {
