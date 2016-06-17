@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if(env('APP_DEBUG', false) && view()->exists('errors.'.$e->getStatusCode()))
+        if(!env('APP_DEBUG', true) && view()->exists('errors.'.$e->getStatusCode()))
         {
             return response()->view('errors.'.$e->getStatusCode(), ['code' => $e->getStatusCode(), 'message' => $e->getMessage()]);
         }
